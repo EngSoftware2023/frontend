@@ -1,0 +1,14 @@
+:root {
+  --primary-color: #ff2400;
+  --secundary-color: #f5f5f5;
+  --tertiary-color: #1e1e1e;
+  --quarternary-color: #e1e1e1;
+
+  --primary-color-darker: #aa0000;
+  --secundary-color-light: #d5d5d5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
