@@ -4,40 +4,64 @@
   bottom: 0;
   left: 0;
   right: 0;
-
-  .collapseButton {
-    width: 100%;
-    height: 50px;
-    border: none;
-    border-radius: 0;
-    margin: 0;
-  }
+  display: flex;
 
   .menu {
-    height: 100%;
+    padding: 30px 0;
+    background-color: var(--secundary-color);
+    width: 80px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+    justify-content: space-between;
+    transition: all 0.5s;
 
-  .content {
-    margin: 24px 16px;
-    padding: 24;
-    background: white;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      width: 5px;
+    .header {
     }
 
-    &::-webkit-scrollbar-thumb {
-      background: #888;
-      transition: all 0.3s;
+    .body {
+      display: flex;
+      flex-direction: column;
 
-      &:hover {
-        background: #555;
+      .option {
+        width: 100%;
+        height: 80px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+        color: black;
+        transition: all 0.3s;
+
+        .icon {
+          font-size: 30px;
+          padding: 25px;
+          color: var(--primary-color);
+        }
+
+        .text {
+          font-size: 20px;
+          width: 250px;
+          flex-shrink: 0;
+          text-transform: capitalize;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
       }
     }
+
+    .footer {
+    }
+
+    &:hover {
+      width: 350px;
+    }
+  }
+  .content {
+    background-color: var(--secundary-light-color);
+    width: 100%;
+    overflow-y: scroll;
   }
 }

@@ -2,6 +2,8 @@ import StructMenu from "@/components/structs/menu/menu";
 import React from "react";
 
 import {
+  FormOutlined,
+  HomeOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
@@ -15,21 +17,11 @@ export default function LayoutProducer({ children }: DataLayoutProducer) {
   return (
     <main>
       <StructMenu
-        items={[
+        options={[
           {
-            key: "1",
-            icon: <UserOutlined />,
-            label: "nav 1",
-          },
-          {
-            key: "2",
-            icon: <VideoCameraOutlined />,
-            label: "nav 2",
-          },
-          {
-            key: "3",
-            icon: <UploadOutlined />,
-            label: "nav 3",
+            icon: <HomeOutlined />,
+            name: "Pagina inicial",
+            link: "/dashboard/gerenciador",
           },
         ]}
       >

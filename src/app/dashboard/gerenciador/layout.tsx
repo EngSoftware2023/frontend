@@ -1,10 +1,10 @@
-import StructMenu from "@/components/structs/menu/menu";
+import StructMenu, { TypeOption } from "@/components/structs/menu/menu";
 import React from "react";
 
 import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  FormOutlined,
+  HomeOutlined,
+  OrderedListOutlined,
 } from "@ant-design/icons";
 
 export type DataLayoutManeger = {
@@ -12,29 +12,27 @@ export type DataLayoutManeger = {
 };
 
 export default function LayoutManager({ children }: DataLayoutManeger) {
+  const options: Array<TypeOption> = [
+    {
+      icon: <HomeOutlined />,
+      name: "Pagina inicial",
+      link: "/dashboard/gerenciador",
+    },
+    {
+      icon: <FormOutlined />,
+      name: "Cadastrar Produtores",
+      link: "/dashboard/gerenciador/cadastrar-produtor",
+    },
+    {
+      icon: <OrderedListOutlined />,
+      name: "Listar Produtores",
+      link: "/dashboard/listar-produtores",
+    },
+  ];
+
   return (
     <main>
-      <StructMenu
-        items={[
-          {
-            key: "1",
-            icon: <UserOutlined />,
-            label: "nav 1",
-          },
-          {
-            key: "2",
-            icon: <VideoCameraOutlined />,
-            label: "nav 2",
-          },
-          {
-            key: "3",
-            icon: <UploadOutlined />,
-            label: "nav 3",
-          },
-        ]}
-      >
-        {children}
-      </StructMenu>
+      <StructMenu options={options}>{children}</StructMenu>
     </main>
   );
 }
