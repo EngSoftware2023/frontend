@@ -36,5 +36,5 @@ export async function postProducer(body: BodyPostProducer) {
     cache: "no-cache",
   });
 
-  return await response.json();
+  return response.json;
 }
