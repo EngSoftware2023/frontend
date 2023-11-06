@@ -75,6 +75,7 @@ export default function ElementFormRegisterProducer() {
           password: password.value,
         })
         .then((response) => {
+          console.log(response)
           setSubmitStatus({
             loading: false,
             send: true,
@@ -83,6 +84,7 @@ export default function ElementFormRegisterProducer() {
           });
         })
         .catch((error) => {
+          console.log(error)
           setSubmitStatus({
             loading: false,
             send: true,
