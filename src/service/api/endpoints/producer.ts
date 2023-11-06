@@ -38,3 +38,26 @@ export async function postProducer(body: BodyPostProducer) {
 
   return response.json;
 }
+
+export type ResponseGetProducers = {
+  cpf: string;
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  password: string;
+  productions: Array<string>;
+};
+
+export async function getProducers() {
+  const response = await fetch(`${API_BASE}/producer/`, {
+    method: "GET",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+  });
+
+  return (await response.json()) as Array<ResponseGetProducers>;
+}
