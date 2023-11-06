@@ -26,7 +26,7 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
     {
       icon: <OrderedListOutlined />,
       name: "Listar Produtores",
-      link: "/dashboard/listar-produtores",
+      link: "/dashboard/gerenciador/listar-produtores",
     },
   ];
 
