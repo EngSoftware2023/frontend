@@ -1,7 +1,10 @@
+import style from "./page.module.scss";
+import SectionRegisterProducer from "@/components/sections/resgister-producer/register-producer";
+
 export default function PageRegisterProducer() {
   return (
-    <main>
-      <h1>Pagina Cadastro do produtor</h1>
+    <main id={style.PageRegisterProducer}>
+      <SectionRegisterProducer/>
     </main>
   );
 }
