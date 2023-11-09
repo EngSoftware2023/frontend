@@ -3,6 +3,7 @@ import React from "react";
 
 import {
   FormOutlined,
+  ProfileOutlined,
   HomeOutlined,
   UploadOutlined,
   UserOutlined,
@@ -21,7 +22,12 @@ export default function LayoutProducer({ children }: DataLayoutProducer) {
           {
             icon: <HomeOutlined />,
             name: "Pagina inicial",
-            link: "/dashboard/gerenciador",
+            link: "/dashboard/produtor",
+          },
+          {
+            icon: <ProfileOutlined />,
+            name: "Ver Perfil",
+            link: "/dashboard/produtor/visualizar",
           },
         ]}
       >

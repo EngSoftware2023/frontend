@@ -11,6 +11,11 @@ export default function PageHome() {
           </Link>
         </li>
         <li>
+          <Link href="/visualizar/produtor" title="Dashboard Gerenciador">
+            Vizualizar Produtor
+          </Link>
+        </li>
+        <li>
           <Link href="/dashboard/gerenciador" title="Dashboard Gerenciador">
             Dashboard Gerenciador
           </Link>
