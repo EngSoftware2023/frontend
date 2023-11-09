@@ -25,6 +25,9 @@ export function FormProducer({ user, updateData, operationFunction }: IProps) {
     useEffect(() => {
         updateData(data);
     }, [data]);
+    useEffect(() => {
+
+    }, [])
 
     return (
         <div className='div_form'>
