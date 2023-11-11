@@ -13,7 +13,6 @@ const getPosts = async (id:string): Promise<IUsers[]> => {
 export default async function Page() {
     const posts:IUsers[] = await getPosts('1233');
 
-    console.log(posts);
     return (
         <>
             <FormSectionData user={posts[0]} />
