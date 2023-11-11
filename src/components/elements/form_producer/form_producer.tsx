@@ -1,93 +1,234 @@
-'use client'
-import React, { useState, useEffect } from 'react'
-import './style.scss'
-import { Button, Input } from 'antd';
-import { FileDoneOutlined, PhoneOutlined, UserOutlined, HomeOutlined, MailOutlined, KeyOutlined } from '@ant-design/icons';
-import { IUsers } from '@/types/types';
-
+"use client";
+import style from "./form-register-producer.module.scss";
+import { Button, Form, Input, Row, Col, Alert } from "antd";
+import { FormOutlined } from "@ant-design/icons";
+import { FormEvent, useEffect, useState } from "react";
+import Mask from "@/helpers/mask";
+import Validation from "@/helpers/validation";
+import ElementInputText, {
+    FormInput,
+} from "../form-input-text/form-input-text";
+import ElementFormCepAddressNumber from "../form-cep-anddress-number/form-cep-address-number";
+import Api from "@/service/api/api";
+import { IUsers } from "@/types/types";
 export interface IProps {
-    user: IUsers | null,
-    operationFunction: Function;
-    updateData: Function;
+    user: IUsers,
 }
-
-export function FormProducer({ user, updateData, operationFunction }: IProps) {
-    const [data, setData] = useState({
-        name: user?.name,
-        phone: user?.phone,
-        email: user?.email,
-        cpf: user?.cpf,
-        address: user?.address,
-        password: user?.password
+export default function FormProducer({ user }: IProps) {
+    const [formData, setFormData] = useState<{
+        name: FormInput;
+        telefone: FormInput;
+        cpf: FormInput;
+        address: FormInput;
+        email: FormInput;
+        password: FormInput;
+        confirmPassword: FormInput;
+    }>({
+        name: { value: user.name, valid: true, invalid: true },
+        telefone: { value: user.phone, valid: true, invalid: true },
+        cpf: { value: user.cpf, valid: true, invalid: true },
+        address: { value: user.address, valid: true, invalid: true },
+        email: { value: user.email, valid: true, invalid: true },
+        password: { value: user.password, valid: true, invalid: true },
+        confirmPassword: { value: user.password, valid: true, invalid: true },
     });
 
+    const [submitStatus, setSubmitStatus] = useState<{
+        text: string;
+        loading: boolean;
+        success: boolean;
+        send: boolean;
+    }>({
+        loading: false,
+        success: false,
+        send: false,
+        text: "",
+    });
 
-    useEffect(() => {
-        updateData(data);
-    }, [data]);
-    useEffect(() => {
+    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-    }, [])
+        const { address, confirmPassword, cpf, email, name, password, telefone } =
+            formData;
+
+        const validToSend =
+            !!address &&
+            confirmPassword.valid &&
+            cpf.valid &&
+            email.valid &&
+            name.valid &&
+            password.valid &&
+            telefone.valid;
+
+        console.log(validToSend, formData);
+
+        if (validToSend) {
+            submitStatus.loading = true;
+            setSubmitStatus({ ...submitStatus });
+
+            Api.public
+                .updateProducers({
+                    name: name.value,
+                    phone: telefone.value,
+                    address: address.value,
+                    email: email.value,
+                    cpf: cpf.value,
+                    password: password.value,
+                })
+                .then((response) => {
+                    console.log(response)
+                    setSubmitStatus({
+                        loading: false,
+                        send: true,
+                        success: true,
+                        text: "Atualizado com sucesso !",
+                    });
+                })
+                .catch((error) => {
+                    console.log(error)
+                    setSubmitStatus({
+                        loading: false,
+                        send: true,
+                        success: false,
+                        text: "Erro ao Atualizar !",
+                    });
+                });
+
+            return;
+        }
+    };
 
     return (
-        <div className='div_form'>
-            <form onSubmit={() => { console.log('') }} action={''} style={{ maxWidth: "600px", margin: "0px auto" }}>
-                <Input
-                    id='name'
-                    value={data.name}
-                    onChange={(e) => {
-                        setData((prevState) => ({
-                            ...prevState,
-                            name: e.target.value,
-                        }));
-                    }} size="large" placeholder="Digite nome completo" prefix={<UserOutlined />} style={{ marginBottom: "20px" }} />
-                <Input
-                    id='phone'
-                    value={data.phone}
-                    onChange={(e) => {
-                        setData((prevState) => ({
-                            ...prevState,
-                            phone: e.target.value,
-                        }));
-                    }} size="large" type='tel' placeholder="Digite telefone" prefix={<PhoneOutlined />} style={{ marginBottom: "20px" }} />
-                <Input
-                    id='cpf'
-                    value={data.cpf}
-                    onChange={(e) => {
-                        setData((prevState) => ({
-                            ...prevState,
-                            cpf: e.target.value,
-                        }));
-                    }} size="large" type='text' placeholder="Digite CPF" prefix={<FileDoneOutlined />} style={{ marginBottom: "20px" }} />
-                <Input
-                    id='address'
-                    value={data.address}
-                    onChange={(e) => {
-                        setData((prevState) => ({
-                            ...prevState,
-                            address: e.target.value,
-                        }));
-                    }} size="large" type='text' placeholder="Digite o endereço" prefix={<HomeOutlined />} style={{ marginBottom: "20px" }} />
-                <Input
-                    id='email'
-                    value={data.email}
-                    onChange={(e) => {
-                        setData((prevState) => ({
-                            ...prevState,
-                            email: e.target.value,
-                        }));
-                    }} size="large" type='email' placeholder="Digite o E-mail" prefix={<MailOutlined />} style={{ marginBottom: "20px" }} />
-                <Input
-                    id='password'
-                    value={data.password}
-                    onChange={(e) => {
-                        setData((prevState) => ({
-                            ...prevState,
-                            password: e.target.value,
-                        }));
-                    }} size="large" type='password' placeholder="Digite a senha" prefix={<KeyOutlined />} style={{ marginBottom: "20px" }} />
-                <button className='button' onClick={(e) => { e.preventDefault(); operationFunction(data.cpf, data) }}>atualizacar</button>
-            </form>
-        </div>
-    )
+        <Form className={style.Form} layout="vertical" onSubmitCapture={onSubmit}>
+            <Row gutter={[12, 15]}>
+                <Col span={12}>
+                    <ElementInputText
+                        label="Nome"
+                        required
+                        min={3}
+                        value={formData.name}
+                        setValue={(newValue) => {
+                            formData.name = newValue;
+                            setFormData({ ...formData });
+                        }}
+                    />
+                </Col>
+                <Col span={12}>
+                    <ElementInputText
+                        label="Telefone"
+                        required
+                        isInvalid={Validation.isPasswordInvalid}
+                        isValid={Validation.isPhoneNumberValid}
+                        masked={Mask.phoneNumberMask}
+                        value={formData.telefone}
+                        setValue={(newValue) => {
+                            formData.telefone = newValue;
+                            setFormData({ ...formData });
+                        }}
+                    />
+                </Col>
+                <Col span={12}>
+                    <ElementInputText
+                        label="E-Mail"
+                        required
+                        isValid={Validation.isEmailValid}
+                        isInvalid={Validation.isEmailInvalid}
+                        value={formData.email}
+                        setValue={(newValue) => {
+                            formData.email = newValue;
+                            setFormData({ ...formData });
+                        }}
+                    />
+                </Col>
+                <Col span={12}>
+                    <ElementInputText
+                        label="CPF"
+                        required
+                        isValid={Validation.isCPFValid}
+                        isInvalid={Validation.isCPFInvalid}
+                        masked={Mask.CPFMask}
+                        value={formData.cpf}
+                        setValue={(newValue) => {
+                            formData.cpf = newValue;
+                            setFormData({ ...formData });
+                        }}
+                    />
+                </Col>
+                <Col span={12}>
+                    <ElementFormCepAddressNumber
+                        setAddress={(address) => {
+                            formData.address = {
+                                value: address,
+                                valid: true,
+                                invalid: false,
+                            };
+                            setFormData({ ...formData });
+                        }}
+                    />
+                </Col>
+                <Col span={24}>
+                    <Form.Item label="Endereço">
+                        <Input disabled value={formData.address.value} />
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <ElementInputText
+                        label="Senha"
+                        required
+                        isValid={Validation.isPasswordValid}
+                        isInvalid={Validation.isPasswordInvalid}
+                        min={8}
+                        value={formData.password}
+                        setValue={(newValue) => {
+                            formData.password = newValue;
+                            setFormData({ ...formData });
+                        }}
+                    />
+                    <p>
+                        A senha deve conter no mínimo 8 caracteres, incluindo no minimo, um
+                        número, letra minúscula, letra maiúscula e caracter especial ex
+                        “!@#$...”.
+                    </p>
+                </Col>
+                <Col span={12}>
+                    <ElementInputText
+                        label="Confirmar Senha"
+                        required
+                        isValid={(password) =>
+                            !!password &&
+                            formData.password.valid &&
+                            password === formData.password.value
+                        }
+                        isInvalid={(password) =>
+                            !!password &&
+                            (password !== formData.password.value ||
+                                formData.password.invalid)
+                        }
+                        value={formData.confirmPassword}
+                        setValue={(newValue) => {
+                            formData.confirmPassword = newValue;
+                            setFormData({ ...formData });
+                        }}
+                    />
+                </Col>
+                <Col className={style.containerButtons} span={24}>
+                    {submitStatus.send && (
+                        <Alert
+                            message={submitStatus.text}
+                            type={submitStatus.success ? "success" : "error"}
+                        />
+                    )}
+                    <Button
+                        className={style.button}
+                        type="primary"
+                        htmlType="submit"
+                        icon={<FormOutlined />}
+                        loading={submitStatus.loading}
+                    >
+                        Atualizar
+                    </Button>
+                </Col>
+            </Row>
+        </Form>
+    );
 }

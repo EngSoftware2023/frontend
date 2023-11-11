@@ -1,20 +1,35 @@
 'use client'
 import { IUsers } from "@/types/types";
 import { useEffect, useState } from "react";
-import { FormProducer } from "./form_producer";
+import Api from "@/service/api/api";
+import FormProducer from "./form_producer";
+import style from "./form-register-producer.module.scss";
+import StructContainer from "@/components/structs/container/container";
 
 export interface IProps {
-    user: IUsers | null,
+    user: IUsers,
 }
 
 export default function FormSectionData({ user }: IProps) {
+    const [submitStatus, setSubmitStatus] = useState<{
+        text: string;
+        loading: boolean;
+        success: boolean;
+        send: boolean;
+    }>({
+        loading: false,
+        success: false,
+        send: false,
+        text: "",
+    });
+
     const [data, setData] = useState({
-        name: user?.name,
-        phone: user?.phone,
-        email: user?.email,
-        cpf: user?.cpf,
-        address: user?.address,
-        password: user?.password
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        cpf: user.cpf,
+        address: user.address,
+        password: user.password
     });
 
 
@@ -24,32 +39,34 @@ export default function FormSectionData({ user }: IProps) {
     };
 
 
-    const update = async (id: string, novosDados: Partial<IUsers>) => {
-        console.log(novosDados, 'DAAAAADOS')
-        try {
-            // Substitua 'id' pelo identificador do recurso que você deseja atualizar
-            const url = `http://hendrickscheifer.pythonanywhere.com/api/producer/`;
-
-            const data = await fetch(url, {
-                method: "PUT", // Alterado para PUT para indicar uma operação de atualização
-                headers: {
-                    "Content-Type": "application/json",
-                    mode: 'no-cors',
-                },
-                body: JSON.stringify(novosDados), // Enviando os novos dados no corpo da requisição
+    const update = async (id: string) => {
+        Api.public
+            .updateProducers({
+                name: data.name,
+                phone: data.phone,
+                address: data.address,
+                email: data.email,
+                cpf: data.cpf,
+                password: data.password,
+            })
+            .then((response) => {
+                console.log(response)
+                setSubmitStatus({
+                    loading: false,
+                    send: true,
+                    success: true,
+                    text: "Atualizado com sucesso !",
+                });
+            })
+            .catch((error) => {
+                console.log(error)
+                setSubmitStatus({
+                    loading: false,
+                    send: true,
+                    success: false,
+                    text: "Erro ao atualizar !",
+                });
             });
-
-            if (!data.ok) {
-                throw new Error(`Erro ao realizar a requisição: ${data.statusText}`);
-            }
-
-            const resposta = await data.json();
-            console.log("Recurso atualizado com sucesso:", resposta);
-        } catch (erro) {
-            console.error("Erro ao atualizar o recurso:", erro);
-        }
-
-
     };
 
 
@@ -59,8 +76,10 @@ export default function FormSectionData({ user }: IProps) {
     }, [data])
 
     return (
-        <section>
-            <FormProducer user={user} operationFunction={update} updateData={incrementData} />
-        </section>
+        <StructContainer className={style.containerForms}>
+            <h2>Atualização de cadastro</h2>
+            <hr className={style.divisor} />
+            <FormProducer user={user} />
+        </StructContainer>
     )
 }
