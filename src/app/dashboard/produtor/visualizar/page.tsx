@@ -1,58 +1,78 @@
 "use client"
-import { PlusOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
-import {
-  Space,
-  Form,
-  Input,
-  Button,
-  Divider,
-  Flex,
-} from 'antd';
+import React from 'react';
+import { Button, Form, Input, Select } from 'antd';
 
-const { TextArea } = Input;
+const { Option } = Select;
 
-const normFile = (e: any) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
 };
 
-const FormDisabledDemo: React.FC = () => {
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(true);
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+
+const App: React.FC = () => {
+  const [form] = Form.useForm();
+
+
+
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
+  const onFill = () => {
+    form.setFieldsValue({ nome: 'Usuario', 
+                          telefone:'(**)****-****', 
+                          cpf:'***********', 
+                          endereço:'***.***.***-**', 
+                          email:'*****@*****'});
+  };
+
   return (
-    <Flex justify='center'>
-      <Form
-        disabled={componentDisabled}
-        style={{ maxWidth: 600 }}
-        
-      >
-        <Form.Item label="Nome">
-          <output />
-        </Form.Item>
+    <Form
+      {...layout}
+      form={form}
+      name="control-hooks"
+      onFinish={onFinish}
+      style={{ maxWidth: 600 }}
+    >
+      <Form.Item name="nome" label="Nome" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="Telefone">
-          <output />
-        </Form.Item>
+      <Form.Item name="telefone" label="Telefone" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="CPF">
-          <output />
-        </Form.Item>
+      <Form.Item name="cpf" label="CPF" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="Endereço">
-          <output />
-        </Form.Item>
+      <Form.Item name="endereço" label="Endereço" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
 
-        <Form.Item label="E-mail">
-          <output />
-        </Form.Item>
+      <Form.Item name="email" label="E-mail" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+    
 
-      </Form>
-      
-      </Flex>
-      
+      <Form.Item {...tailLayout}>
+        <Button htmlType="button" onClick={onReset}>
+          Reset
+        </Button>
+        <Button type="link" htmlType="button" onClick={onFill}>
+          Fill form
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
-export default () => <FormDisabledDemo />;
+export default App;
