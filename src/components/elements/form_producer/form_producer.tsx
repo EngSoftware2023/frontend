@@ -154,21 +154,10 @@ export default function FormProducer({ user }: IProps) {
                         }}
                     />
                 </Col>
-                <Col span={12}>
-                    <ElementFormCepAddressNumber
-                        setAddress={(address) => {
-                            formData.address = {
-                                value: address,
-                                valid: true,
-                                invalid: false,
-                            };
-                            setFormData({ ...formData });
-                        }}
-                    />
-                </Col>
+             
                 <Col span={24}>
                     <Form.Item label="Endereço">
-                        <Input disabled value={formData.address.value} />
+                        <Input  value={formData.address.value} />
                     </Form.Item>
                 </Col>
                 <Col span={12}>
