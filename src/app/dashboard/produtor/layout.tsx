@@ -3,11 +3,9 @@ import React from "react";
 
 import {
   FormOutlined,
-  ProfileOutlined,
+  FundOutlined,
   HomeOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
 
 export type DataLayoutProducer = {
@@ -25,9 +23,14 @@ export default function LayoutProducer({ children }: DataLayoutProducer) {
             link: "/dashboard/produtor",
           },
           {
-            icon: <ProfileOutlined />,
+            icon: <UserOutlined />,
             name: "Ver Perfil",
             link: "/dashboard/produtor/visualizar",
+          },
+          {
+            icon: <FundOutlined />,
+            name: "Produção",
+            link: "/dashboard/produtor/producao",
           },
         ]}
       >
