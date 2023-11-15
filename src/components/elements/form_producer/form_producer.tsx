@@ -47,7 +47,7 @@ export default function FormProducer({ user }: IProps) {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+        console.log('foi')
         const { address, confirmPassword, cpf, email, name, password, telefone } =
             formData;
 
@@ -97,7 +97,6 @@ export default function FormProducer({ user }: IProps) {
             return;
         }
     };
-
     return (
         <Form className={style.Form} layout="vertical" onSubmitCapture={onSubmit}>
             <Row gutter={[12, 15]}>
@@ -154,10 +153,15 @@ export default function FormProducer({ user }: IProps) {
                         }}
                     />
                 </Col>
-             
+
                 <Col span={24}>
                     <Form.Item label="Endereço">
-                        <Input  value={formData.address.value} />
+                        <Input value={formData.address.value} onChange={(e) => {
+                            setFormData((prevState) => ({
+                                ...prevState,
+                                address:{ value: e.target.value, valid: true, invalid: true },
+                            }));
+                        }} />
                     </Form.Item>
                 </Col>
                 <Col span={12}>
