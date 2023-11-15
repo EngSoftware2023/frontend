@@ -6,10 +6,9 @@ import { useParams } from 'next/navigation';
 
 export default function Page() {
     const router = useParams()
-    console.log(router.slug)
     return (
         <>
-            <FormSectionData userId={router.slug as string} />
+            <FormSectionData/>
         </>
     )
 }

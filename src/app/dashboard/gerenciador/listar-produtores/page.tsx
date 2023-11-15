@@ -46,7 +46,7 @@ export default async function PageProducerList() {
                       </Col>
                       <Col span={4} className={style.containerButton}>
                         <Link
-                          href={`/dashboard/gerenciador/editar-produtor/${cpf}`}
+                          href={`/dashboard/gerenciador/editar-produtor/${cpf}?name=${name}&phone=${phone}&email=${email}&cpf=${cpf}&address=${address}&password=${password}`}
                           title={`Editar ${name}`}
                         >
                           <Button>Editar</Button>
