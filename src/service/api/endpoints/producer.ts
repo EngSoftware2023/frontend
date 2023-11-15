@@ -1,4 +1,5 @@
-import { API_BASE } from "../api";
+import { IUsers } from "@/types/types";
+import { API_BASE, API_BASE_PUT } from "../api";
 
 export enum ResponsePostProducer {
   OK = 200,
@@ -75,27 +76,38 @@ export async function updateProducers(body: BodyPostProducer) {
   formData.append("email", email);
   formData.append("password", password);
   console.log('Data', body)
-  const response = await fetch(`${API_BASE}/producer/`, {
+  const response = await fetch(`${API_BASE_PUT}/producer/`, {
     method: "PUT",
     headers: {
       "User-Agent": "frontend",
     },
-    body:formData,
+    body: formData,
     cache: "no-cache",
+    mode:'cors'
   });
 
   return response.json;
 }
 
-export async function getProducer(cpf: string) {
-  const response = await fetch(`${API_BASE}/producer/${cpf}`, {
-    method: "GET",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "no-cache",
-  });
 
-  return (await response.json()) as Array<ResponseGetProducers>;
+export async function getProducer(id: string): Promise<ResponseGetProducers> {
+  try {
+    const requestOptions: RequestInit = {
+      method: 'GET',
+      redirect: 'follow',
+      mode:'no-cors'
+    };
+
+    const response = await fetch(`${API_BASE_PUT}/producer/${id}`, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const result: ResponseGetProducers = await response.json();
+    return result;
+  } catch (error) {
+    console.error('error', error);
+    throw error;
+  }
 }
