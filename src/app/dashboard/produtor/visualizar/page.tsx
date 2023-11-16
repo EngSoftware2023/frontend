@@ -1,63 +1,65 @@
-"use client"
-import React, { useState } from 'react';
-import { Button, Form, Input, Select } from 'antd';
+import style from "./producer-list.module.scss";
+import StructContainer from "@/components/structs/container/container";
+import Api from "@/service/api/api";
+import { ResponseGetProducers } from "@/service/api/endpoints/producer";
+import { Button, Col, Row } from "antd";
+import Link from "next/link";
 
-const { Option } = Select;
+export default async function PageProducerList() {
+  let producers: Array<ResponseGetProducers> = [];
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
-
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
-const App: React.FC = () => {
-  const [form] = Form.useForm();
-
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
+  try {
+    producers = await Api.public.getProducers();
+  } catch (e) {
+    console.error(e);
+  }
 
   return (
-    <Form
-      disabled
-      {...layout}
-      form={form}
-      name="control-hooks"
-      onFinish={onFinish}
-      style={{ maxWidth: 600 }}
-      initialValues={{  nome:'Usuario', 
-                        telefone:'(**)****-****',
-                        cpf:'***********', 
-                        endereço:'***.***.***-**', 
-                        email:'*****@*****',
-    }}
-    >
-
-      <Form.Item name="nome" label="Nome">
-        <Input placeholder="Usuario" />
-      </Form.Item>
-
-      <Form.Item name="telefone" label="Telefone">
-        <Input />
-      </Form.Item>
-
-      <Form.Item name="cpf" label="CPF">
-        <Input />
-      </Form.Item>
-
-      <Form.Item name="endereço" label="Endereço" >
-        <Input />
-      </Form.Item>
-
-      <Form.Item name="email" label="E-mail">
-        <Input/>
-      </Form.Item>
-
-    </Form>
+    <main>
+      <section id={style.SectionProducerList}>
+        <StructContainer>
+          <h1>Seu Perfil:</h1>
+          <hr />
+          <Row gutter={[12, 15]}>
+            {producers.map(
+              (
+                { address, cpf, email, name, password, phone, productions },
+                index
+              ) => (
+                <Col key={index} span={24}>
+                  <div className={style.cardProducer}>
+                    <Row>
+                      <Col span={20}>
+                        <p>
+                          <strong>Nome: </strong>
+                          {name}
+                        </p>
+                        <p>
+                          <strong>CPF: </strong>
+                          {cpf}
+                        </p>
+                        <p>
+                          <strong>Endereço: </strong>
+                          {address}
+                        </p>
+                        <p>
+                          <strong>Numero: </strong>
+                          {phone}
+                        </p>
+                        <p>
+                          <strong> Email: </strong>
+                            {email}
+                        </p>
+                      </Col>
+                 
+                    </Row>
+                  </div>
+                </Col>
+              )
+            )}
+          </Row>
+        </StructContainer>
+      </section>
+    </main>
   );
-};
-
-export default App;
+}
