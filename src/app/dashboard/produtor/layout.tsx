@@ -4,6 +4,7 @@ import React from "react";
 import {
   FormOutlined,
   ProfileOutlined,
+  OrderedListOutlined,
   HomeOutlined,
   UploadOutlined,
   UserOutlined,
@@ -28,6 +29,11 @@ export default function LayoutProducer({ children }: DataLayoutProducer) {
             icon: <ProfileOutlined />,
             name: "Ver Perfil",
             link: "/dashboard/produtor/visualizar",
+          },
+          {
+            icon: <OrderedListOutlined />,
+            name: "Ver Relato de produção",
+            link: "/dashboard/produtor/verRelato",
           },
         ]}
       >
