@@ -28,6 +28,11 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       name: "Listar Produtores",
       link: "/dashboard/gerenciador/listar-produtores",
     },
+    {
+      icon: <OrderedListOutlined />,
+      name: "Listar Produções",
+      link: "/dashboard/gerenciador/listar-producoes",
+    },
   ];
 
   return (
