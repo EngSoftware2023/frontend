@@ -61,3 +61,24 @@ export async function getProducers() {
 
   return (await response.json()) as Array<ResponseGetProducers>;
 }
+
+export type ResponseGetProduction= {
+    quantity: string,
+    status: string,
+    producer: string,
+    product: string
+};
+
+export async function getProduction() {
+  const response = await fetch(`${API_BASE}/production/`, {
+    method: "GET",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+  });
+
+  return (await response.json()) as Array<ResponseGetProduction>;
+}
+
