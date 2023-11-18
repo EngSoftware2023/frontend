@@ -59,8 +59,6 @@ export default function ElementFormRegisterProducer() {
       password.valid &&
       telefone.valid;
 
-    console.log(validToSend, formData);
-
     if (validToSend) {
       submitStatus.loading = true;
       setSubmitStatus({ ...submitStatus });
@@ -75,7 +73,6 @@ export default function ElementFormRegisterProducer() {
           password: password.value,
         })
         .then((response) => {
-          console.log(response)
           setSubmitStatus({
             loading: false,
             send: true,

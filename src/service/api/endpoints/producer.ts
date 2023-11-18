@@ -26,9 +26,6 @@ export async function postProducer(body: BodyPostProducer) {
   formData.append("cpf", cpf);
   formData.append("email", email);
   formData.append("password", password);
-
-  console.log(formData)
-
   const response = await fetch(`${API_BASE}/producer/`, {
     method: "POST",
     mode: "no-cors",
@@ -75,7 +72,6 @@ export async function updateProducers(body: BodyPostProducer) {
   formData.append("cpf", cpf);
   formData.append("email", email);
   formData.append("password", password);
-  console.log('Data', body)
   const response = await fetch(`${API_BASE_PUT}/producer/`, {
     method: "PUT",
     headers: {
@@ -83,7 +79,7 @@ export async function updateProducers(body: BodyPostProducer) {
     },
     body: formData,
     cache: "no-cache",
-    mode:'cors'
+    mode:'no-cors'
   });
 
   return response.json;

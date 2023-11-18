@@ -29,12 +29,6 @@ export default function FormSectionData() {
     });
 
     useEffect(() => {
-        console.log('Name:', name);
-        console.log('Phone:', phone);
-        console.log('Email:', email);
-        console.log('CPF:', cpf);
-        console.log('Address:', address);
-        console.log('Password:', password);
         if (name != null && phone != null && address != null && email != null && cpf != null && password != null) {
             setUser({
                 name: name,
@@ -45,7 +39,6 @@ export default function FormSectionData() {
                 password: password,
             })
         }
-        console.log(user)
     },[])
 
 

@@ -47,7 +47,6 @@ export default function FormProducer({ user }: IProps) {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log('foi')
         const { address, confirmPassword, cpf, email, name, password, telefone } =
             formData;
 
@@ -59,9 +58,6 @@ export default function FormProducer({ user }: IProps) {
             name.valid &&
             password.valid &&
             telefone.valid;
-
-        console.log(validToSend, formData);
-
         if (validToSend) {
             submitStatus.loading = true;
             setSubmitStatus({ ...submitStatus });
@@ -76,7 +72,6 @@ export default function FormProducer({ user }: IProps) {
                     password: password.value,
                 })
                 .then((response) => {
-                    console.log(response)
                     setSubmitStatus({
                         loading: false,
                         send: true,
@@ -85,7 +80,6 @@ export default function FormProducer({ user }: IProps) {
                     });
                 })
                 .catch((error) => {
-                    console.log(error)
                     setSubmitStatus({
                         loading: false,
                         send: true,
