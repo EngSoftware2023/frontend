@@ -6,6 +6,7 @@ import ElementInputText, {
 import SubmitState from "@/components/lib/own/submit-status/submit-status";
 import StructContainer from "@/components/structs/container/container";
 import Validation from "@/helpers/validation";
+import Api from "@/service/api/api";
 import { Button, Col, Form, Row } from "antd";
 import Password from "antd/es/input/Password";
 import Link from "next/link";
@@ -33,7 +34,24 @@ export function SectionLogin() {
 
     if (forms.email.invalid || forms.password.invalid) {
       setForms({ ...forms });
+      return;
     }
+
+    setLoading();
+
+    Api.public
+      .postLogin({
+        email: forms.email.value,
+        password: forms.password.value,
+      })
+      .then((response) => {
+        console.log(response);
+        setSendOk("Entrou");
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Error");
+      });
   };
 
   return (

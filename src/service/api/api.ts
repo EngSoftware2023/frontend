@@ -5,8 +5,9 @@ import {
   getProducer,
 } from "./endpoints/producer";
 import { postProduction } from "./endpoints/production";
+import { postLogin } from "./endpoints/login";
 
-export const API_BASE = "https://hendrickscheifer.pythonanywhere.com/api";
+export const API_BASE = "http://hendrickscheifer.pythonanywhere.com/api";
 export const API_BASE_PUT = "http://hendrickscheifer.pythonanywhere.com";
 
 const Api = {
@@ -16,6 +17,7 @@ const Api = {
     updateProducers,
     getProducer,
     postProduction,
+    postLogin,
   },
 };
 
