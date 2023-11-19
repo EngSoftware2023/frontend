@@ -4,6 +4,7 @@ import React from "react";
 import {
   FormOutlined,
   FundOutlined,
+  OrderedListOutlined,
   HomeOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -31,6 +32,11 @@ export default function LayoutProducer({ children }: DataLayoutProducer) {
             icon: <FundOutlined />,
             name: "Produção",
             link: "/dashboard/produtor/producao",
+          },
+          {
+            icon: <OrderedListOutlined />,
+            name: "Ver Relato de produção",
+            link: "/dashboard/produtor/verRelato",
           },
         ]}
       >
