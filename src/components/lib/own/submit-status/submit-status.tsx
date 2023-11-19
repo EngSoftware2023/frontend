@@ -25,8 +25,9 @@ export default function SubmitState(initialMessage: string) {
       setState({ message, send: true, loading: false, error: true }),
     setSendOk: (message: string) =>
       setState({ message, send: true, loading: false, error: false }),
-    SubmitButton: () => (
+    SubmitButton: ({className}:{className?: string}) => (
       <Button
+        className={className}
         htmlType="submit"
         title={state.message}
         loading={state.loading}
