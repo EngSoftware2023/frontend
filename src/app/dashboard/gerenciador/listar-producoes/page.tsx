@@ -1,59 +1,67 @@
 import style from "./producer-list.module.scss";
 import StructContainer from "@/components/structs/container/container";
 import Api from "@/service/api/api";
-import { ResponseGetProduction } from "@/service/api/endpoints/producer";
-import { Button, Col, Row } from "antd";
-import Link from "next/link";
+import { ResponseGetProduct } from "@/service/api/endpoints/producer";
+import { Col, Row } from "antd";
 
 export default async function PageProducerList() {
-  let production: Array<ResponseGetProduction> = [];
+  let production: Array<ResponseGetProduct> = [];
 
   try {
-    production = await Api.public.getProduction();
+    production = await Api.public.getProduct();
   } catch (e) {
     console.error(e);
   }
 
   return (
     <main>
-      <section id={style.SectionProducerList}>
+      <section id={style.SectionProductionnpmList}>
         <StructContainer>
           <h1>Listagem dos Produtores Cadastrados</h1>
           <hr />
           <Row gutter={[12, 15]}>
             {production.map(
               (
-                { quantity, status, producer, product },
+                { 
+                  id,
+                  name,
+                  date,
+                  total,
+                  status,
+                  products,
+                 },
                 index
               ) => (
                 <Col key={index} span={24}>
-                  <div className={style.cardProducer}>
+                  <div className={style.cardProduction}>
                     <Row>
                       <Col span={20}>
                         <p>
-                          <strong>Quantidade: </strong>
-                          {quantity}
+                          <strong>ID: </strong>
+                          {id}
                         </p>
                         <p>
-                          <strong>Status do item: </strong>
+                          <strong>Nome:</strong>
+                          {name}
+                        </p>
+                        <p>
+                          <strong>Data: </strong>
+                          {date}
+                        </p>
+                        <p>
+                          <strong>Total: </strong>
+                          {total}
+                        </p>
+                        <p>
+                          <strong>Status: </strong>
                           {status}
                         </p>
                         <p>
-                          <strong>Produtor: </strong>
-                          {producer}
-                        </p>
-                        <p>
-                          <strong>Produto: </strong>
-                          {product}
+                          <strong>Products: </strong>
+                          {products}
                         </p>
                       </Col>
                       <Col span={4} className={style.containerButton}>
-                        <Link
-                          href={"/dashboard/gerenciador/editar-produtor"}
-                          title={`Editar ${name}`}
-                        >
-                          <Button>Editar</Button>
-                        </Link>
                       </Col>
                     </Row>
                   </div>
