@@ -30,9 +30,15 @@ export function isEmailValid(email: string): boolean {
 }
 
 export function isANumber(number: string): boolean {
-  return !isNaN(Number(number)) && !/[a-zA-Z]/.test(number);
+  console.log(/^\d+$/.test(number))
+
+  return /^\d+$/.test(number);
 }
 
+export function isNotNumber(number: string): boolean {
+  console.log(!/^\d+$/.test(number))
+  return !/^\d+$/.test(number);
+}
 export function isEmailInvalid(email: string): boolean {
   if (!email.length) return false;
 
@@ -73,6 +79,7 @@ const Validation = {
   isEmailValid,
   isEmailInvalid,
   isANumber,
+  isNotNumber,
   isNameMinimumValid,
   isPasswordMinimumValid,
   isPasswordValid,
