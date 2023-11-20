@@ -1,22 +1,29 @@
+'use client'
+// OrderForm.tsx
+
 import React, { useState } from 'react';
-import { Form, Input, Button, DatePicker, InputNumber, List } from 'antd';
+import { Form, Input, Button, List, InputNumber } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
 import { PlusOutlined } from '@ant-design/icons';
+import { Order, Product } from '../types/types';
 
-const OrderForm: React.FC = () => {
-  const [form] = Form.useForm();
-  const [products, setProducts] = useState<{ product_name: string; quantity: number; price: number }[]>([]);
+interface OrderFormProps {
+  token: string | null;
+}
 
-  const onFinish = async (values: any) => {
+const OrderForm: React.FC<OrderFormProps> = ({ token }) => {
+  const [form] = useForm();
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const onFinish = async (values: Order) => {
     try {
-      // Adicionando a lista de produtos aos valores do pedido
-      const orderWithProducts = { ...values, products };
-      
-      const response = await fetch('/Api/order', {
+      const response = await fetch('https://hendrickscheifer.pythonanywhere.com/api/order/', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(orderWithProducts),
+        body: JSON.stringify({ ...values, products }),
       });
 
       if (!response.ok) {
@@ -35,85 +42,58 @@ const OrderForm: React.FC = () => {
     }
   };
 
-  const handleProductNameChange = (index: number, value: string) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].product_name = value;
-    setProducts(updatedProducts);
-  };
-
-  const handleProductQuantityChange = (index: number, value: number | null) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].quantity = value ?? 0; // Se value for null, use 0
-    setProducts(updatedProducts);
-  };
-  
-  const handleProductPriceChange = (index: number, value: number | null) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].price = value ?? 0; // Se value for null, use 0
-    setProducts(updatedProducts);
-  };
   const addProduct = () => {
-    // Lógica para adicionar um novo produto ao estado local
-    const newProduct = { product_name: 'Novo Produto', quantity: 1, price: 0.0 };
-    setProducts([...products, newProduct]);
+    setProducts([...products, { product_name: '', quantity: 0, price: 0 }]);
   };
 
   return (
     <Form form={form} name="orderForm" onFinish={onFinish}>
-      {/* Adicione os campos do formulário conforme necessário */}
       <Form.Item name="name" label="Nome do Pedido">
         <Input />
       </Form.Item>
 
-      <Form.Item name="date" label="Data do Pedido">
-        <DatePicker />
-      </Form.Item>
-
-      <Form.Item name="total" label="Total">
-        <InputNumber />
-      </Form.Item>
-
-      {/* Lista de produtos */}
       <List
-        header={<div>Produtos</div>}
         dataSource={products}
         renderItem={(product, index) => (
-          <List.Item>
-            <Form.Item label="Nome do Produto">
-              <Input
-                value={product.product_name}
-                onChange={(e) => handleProductNameChange(index, e.target.value)}
-              />
-            </Form.Item>
-            <Form.Item label="Quantidade">
-              <InputNumber
-                value={product.quantity}
-                onChange={(value) => handleProductQuantityChange(index, value)}
-              />
-            </Form.Item>
-            <Form.Item label="Preço">
-              <InputNumber
-                value={product.price}
-                onChange={(value) => handleProductPriceChange(index, value)}
-              />
-            </Form.Item>
+          <List.Item key={index}>
+            <Input
+              value={product.product_name}
+              onChange={(e) => {
+                const newProducts = [...products];
+                newProducts[index].product_name = e.target.value;
+                setProducts(newProducts);
+              }}
+              placeholder="Nome do Produto"
+            />
+            <InputNumber
+              value={product.quantity}
+              onChange={(value) => {
+                const newProducts = [...products];
+                newProducts[index].quantity = value as number;
+                setProducts(newProducts);
+              }}
+              placeholder="Quantidade"
+            />
+            <InputNumber
+              value={product.price}
+              onChange={(value) => {
+                const newProducts = [...products];
+                newProducts[index].price = value as number;
+                setProducts(newProducts);
+              }}
+              placeholder="Preço"
+            />
           </List.Item>
         )}
       />
 
-      {/* Botão para adicionar produto */}
-      <Form.Item>
-        <Button type="dashed" onClick={addProduct} icon={<PlusOutlined />}>
-          Adicionar Produto
-        </Button>
-      </Form.Item>
+      <Button type="dashed" onClick={addProduct} icon={<PlusOutlined />}>
+        Adicionar Produto
+      </Button>
 
-      {/* Botão de submit */}
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Criar Pedido
-        </Button>
-      </Form.Item>
+      <Button type="primary" htmlType="submit">
+        Criar Pedido
+      </Button>
     </Form>
   );
 };
