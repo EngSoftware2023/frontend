@@ -40,7 +40,6 @@ export async function postProduction(body: BodyPostProdcution) {
 
   const response = await fetch(`${API_BASE}/production/`, {
     method: "POST",
-    mode: "no-cors",
     headers: {
       "User-Agent": "frontend",
     },

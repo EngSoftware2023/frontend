@@ -5,7 +5,12 @@ export type BodyPostLogin = {
   password: string;
 };
 
-export async function postLogin(body: BodyPostLogin) {
+export type ReponsePostLogin = {
+  access: string;
+  refresh: string;
+};
+
+export async function postLogin(body: BodyPostLogin): Promise<ReponsePostLogin> {
   const { email, password } = body;
 
   const formData = new FormData();
@@ -15,7 +20,6 @@ export async function postLogin(body: BodyPostLogin) {
 
   const response = await fetch(`${API_BASE}/token/`, {
     method: "POST",
-    mode:"no-cors",
     headers: {
       "User-Agent": "frontend",
     },
@@ -23,5 +27,5 @@ export async function postLogin(body: BodyPostLogin) {
     cache: "no-cache",
   });
 
-  return await response.json();
+  return (await response.json()) as ReponsePostLogin;
 }

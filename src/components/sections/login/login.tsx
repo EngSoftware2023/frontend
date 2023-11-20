@@ -7,12 +7,16 @@ import SubmitState from "@/components/lib/own/submit-status/submit-status";
 import StructContainer from "@/components/structs/container/container";
 import Validation from "@/helpers/validation";
 import Api from "@/service/api/api";
+import Auth from "@/service/auth/auth";
 import { Button, Col, Form, Row } from "antd";
 import Password from "antd/es/input/Password";
+import { jwtDecode } from "jwt-decode";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 
 export function SectionLogin() {
+  const route = useRouter();
   const initialValues: FormInput = { value: "", valid: false, invalid: false };
 
   const [forms, setForms] = useState<{
@@ -45,8 +49,11 @@ export function SectionLogin() {
         password: forms.password.value,
       })
       .then((response) => {
-        console.log(response);
         setSendOk("Entrou");
+        const { access, refresh } = response;
+        Auth.setAuth({ access, refresh });
+        route.replace(`/dashboard/${Auth.getCorrectRedirect(access)}`);
+        return;
       })
       .catch((error) => {
         console.log(error);
