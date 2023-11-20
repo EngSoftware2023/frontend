@@ -1,6 +1,20 @@
 import Cookie from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
+export type Payload = {
+  token_type: string;
+  exp: number;
+  iat: number;
+  jti: string;
+  user_id: number;
+  type: string;
+  cpf: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+};
+
 export type DataAuth = {
   access: string;
   refresh: string;
@@ -37,11 +51,23 @@ function getCorrectRedirect(token: string): string {
     : "";
 }
 
+function isTokenExpired(token: string): boolean {
+  const { exp } = jwtDecode(token);
+
+  return !!exp && exp < Math.floor(Date.now() / 1000);
+}
+
+function getDataFromExpired(token: string): Payload {
+  return jwtDecode<Payload>(token);
+}
+
 const Auth = {
   setAuth,
   getAuth,
   removeAuth,
-  getCorrectRedirect
+  getCorrectRedirect,
+  isTokenExpired,
+  getDataFromExpired,
 };
 
 export default Auth;
