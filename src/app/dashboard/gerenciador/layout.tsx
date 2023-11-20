@@ -4,7 +4,6 @@ import React from "react";
 import {
   FormOutlined,
   HomeOutlined,
-  OrderedListOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
 
@@ -21,13 +20,18 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
     },
     {
       icon: <FormOutlined />,
-      name: "Cadastrar Produtores",
+      name: "Cadastrar Produtor",
       link: "/dashboard/gerenciador/cadastrar-produtor",
     },
     {
-      icon: <OrderedListOutlined />,
+      icon: <UnorderedListOutlined />,
       name: "Listar Produtores",
       link: "/dashboard/gerenciador/listar-produtores",
+    },
+    {
+      icon: <FormOutlined />,
+      name: "Cadastrar Pedido",
+      link: "/dashboard/gerenciador/cadastrar-pedido",
     },
     {
       icon: <UnorderedListOutlined />,
