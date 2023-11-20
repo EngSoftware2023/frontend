@@ -1,7 +1,6 @@
 // pages/index.tsx
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
-import OrderForm from '@/components/OrderForm'; // Certifique-se de que o caminho está correto
 
 interface Order {
   id: number;
@@ -77,9 +76,6 @@ const Home: React.FC = () => {
           </li>
         ))}
       </ul>
-
-      {/* Adiciona o componente OrderForm passando o token como propriedade */}
-      <OrderForm token={token} />
     </div>
   );
 };

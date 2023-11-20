@@ -16,7 +16,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders, token }) => {
     try {
       const detailedOrdersData = await Promise.all(
         orders.map(async (order) => {
-          const response = await fetch(`https://hendrickscheifer.pythonanywhere.com/api/order/${order.id}`, {
+          const response = await fetch(`https://hendrickscheifer.pythonanywhere.com/api/order/`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
