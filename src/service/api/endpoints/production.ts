@@ -57,7 +57,6 @@ export async function updateProduction(body: ResponseGetProduction) {
         },
         body: formData,
         cache: "no-cache",
-        mode: 'no-cors'
     });
 
     return response.json;
