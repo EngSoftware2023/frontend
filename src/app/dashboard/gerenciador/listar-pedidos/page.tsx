@@ -1,65 +1,83 @@
-import style from "./producer-list.module.scss";
-import StructContainer from "@/components/structs/container/container";
-import Api from "@/service/api/api";
-import { ResponseGetProducers } from "@/service/api/endpoints/producer";
-import { Button, Col, Row } from "antd";
-import Link from "next/link";
+// pages/index.tsx
+'use client';
+import React, { useEffect, useState } from 'react';
 
-export default async function PageProducerList() {
-  let producers: Array<ResponseGetProducers> = [];
+interface Order {
+  id: number;
+  name: string;
+  date: string;
+  total: number;
+  status: string;
+  products: Array<{
+    product_name: string;
+    quantity: number;
+    price: number;
+  }>;
+}
 
+const getOrders = async (token: string) => {
   try {
-    producers = await Api.public.getProducers();
-  } catch (e) {
-    console.error(e);
+    const response = await fetch('https://hendrickscheifer.pythonanywhere.com/api/order/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.statusText}`);
+    }
+
+    const ordersData: Order[] = await response.json();
+    console.log('Orders:', ordersData);
+    return ordersData;
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    throw error;
   }
+};
+
+const Home: React.FC = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [token, setToken] = useState<string | null>(null); // Certifique-se de definir o token corretamente
+
+  useEffect(() => {
+    // Simule a obtenção do token (pode vir de um contexto, estado, etc.)
+    const fakeToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNTY4OTUxLCJpYXQiOjE3MDA0ODI1NTEsImp0aSI6Ijg1NWM2YjM1NTYwNzRhOGI4NzM1M2FlYWI1MDQ4YWQzIiwidXNlcl9pZCI6NSwidHlwZSI6ImFkbWluIiwiZW1haWwiOiJoZW5kcmlja2Zzc3NAZ21haWwuY29tIn0.lER9bWpfuGh9wA2lw1sru8QkBJr20YRBy96v0YAMpHk';
+    setToken(fakeToken);
+
+    const fetchData = async () => {
+      try {
+        const ordersData = await getOrders(fakeToken);
+        setOrders(ordersData);
+      } catch (error) {
+        console.error('Erro ao buscar os pedidos:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <main>
-      <section id={style.SectionProducerList}>
-        <StructContainer>
-          <h1>Listagem dos Pedidos Cadastrados</h1>
-          <hr />
-          <Row gutter={[12, 15]}>
-            {producers.map(
-              (
-                { address, cpf, email, name, password, phone, productions },
-                index
-              ) => (
-                <Col key={index} span={24}>
-                  <div className={style.cardProducer}>
-                    <Row>
-                      <Col span={20}>
-                        <h3>
-                          {name} - {cpf}
-                        </h3>
-                        <p>
-                          <strong>Endereço: </strong>
-                          {address}
-                        </p>
-                        <p>
-                          <strong>Numero: </strong>
-                          {phone}
-                          <strong> Email: </strong>
-                          {email}
-                        </p>
-                      </Col>
-                      <Col span={4} className={style.containerButton}>
-                        <Link
-                          href={`/dashboard/gerenciador/editar-produtor/${cpf}?name=${name}&phone=${phone}&email=${email}&cpf=${cpf}&address=${address}&password=${password}`}
-                          title={`Editar ${name}`}
-                        >
-                          <Button>Editar</Button>
-                        </Link>
-                      </Col>
-                    </Row>
-                  </div>
-                </Col>
-              )
-            )}
-          </Row>
-        </StructContainer>
-      </section>
-    </main>
+    <div>
+      <h1>Pedidos</h1>
+      <ul>
+        {orders.map((order) => (
+          <li key={order.id}>
+            <strong>{order.name}</strong>
+            <p>Data: {order.date}</p>
+            <p>Total: R$ {order.total.toFixed(2)}</p>
+            <p>Status: {order.status}</p>
+            <ul>
+              {order.products.map((product) => (
+                <li key={product.product_name}>
+                  {product.product_name} - Quantidade: {product.quantity}, Preço: R$ {product.price.toFixed(2)}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-}
+};
+
+export default Home;

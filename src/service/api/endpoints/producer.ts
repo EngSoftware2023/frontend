@@ -28,7 +28,6 @@ export async function postProducer(body: BodyPostProducer) {
   formData.append("password", password);
   const response = await fetch(`${API_BASE}/producer/`, {
     method: "POST",
-    mode: "no-cors",
     headers: {
       "User-Agent": "frontend",
     },
@@ -36,7 +35,7 @@ export async function postProducer(body: BodyPostProducer) {
     cache: "no-cache",
   });
 
-  return response.json;
+  return await response;
 }
 
 export type ResponseGetProducers = {
@@ -52,7 +51,6 @@ export type ResponseGetProducers = {
 export async function getProducers() {
   const response = await fetch(`${API_BASE}/producer/`, {
     method: "GET",
-    mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
     },
@@ -79,22 +77,22 @@ export async function updateProducers(body: BodyPostProducer) {
     },
     body: formData,
     cache: "no-cache",
-    mode:'no-cors'
   });
 
   return response.json;
 }
 
-
 export async function getProducer(id: string): Promise<ResponseGetProducers> {
   try {
     const requestOptions: RequestInit = {
-      method: 'GET',
-      redirect: 'follow',
-      mode:'no-cors'
+      method: "GET",
+      redirect: "follow",
     };
 
-    const response = await fetch(`${API_BASE_PUT}/producer/${id}`, requestOptions);
+    const response = await fetch(
+      `${API_BASE_PUT}/producer/${id}`,
+      requestOptions
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`);
@@ -103,7 +101,7 @@ export async function getProducer(id: string): Promise<ResponseGetProducers> {
     const result: ResponseGetProducers = await response.json();
     return result;
   } catch (error) {
-    console.error('error', error);
+    console.error("error", error);
     throw error;
   }
 }

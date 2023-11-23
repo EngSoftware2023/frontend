@@ -69,7 +69,7 @@ export default function ListProduction({ productions }: MyComponentProps) {
                                                                     <Button>Editar</Button>
                                                                 </Link>
                                                             </Col>
-                                                            <Col span={2} className={style.containerButton} onClick={() => { DeleteProduction(id) }}>
+                                                            <Col span={2} className={style.containerButton} onClick={() => { DeleteProduction(parseInt(id)) }}>
 
                                                                 <Button>Deletar</Button>
                                                             </Col>

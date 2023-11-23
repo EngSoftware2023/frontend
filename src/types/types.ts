@@ -6,17 +6,25 @@ export interface IUsers {
     email: string,
     password: string
 }
-
-export  interface IProduction{
-    producer: string,
-    product: string,
-    quantity: string,
-    date: string,
-    id: string,
+export interface Product {
+  product_name: string;
+  quantity: number;
+  price: number;
 }
 
-export  interface IProduct{
-    stock: string,
-    name: string,
-    request: string,
+export interface Order {
+  id: number;
+  name: string | null;
+  date: string;
+  total: number;
+  status: string;
+  products: Product[];
+}
+
+export  interface IProduction{
+  producer: string,
+  product: string,
+  quantity: string,
+  date: string,
+  id: string,
 }
