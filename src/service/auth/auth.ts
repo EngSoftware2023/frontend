@@ -1,5 +1,7 @@
 import Cookie from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 
 export type Payload = {
   token_type: string;
@@ -30,11 +32,32 @@ function removeAuth() {
   Cookie.remove("auth_refresh");
 }
 
+function removeAuthWithRedirect(routerInstance: AppRouterInstance) {
+  Cookie.remove("auth_access");
+  Cookie.remove("auth_refresh");
+  routerInstance.replace("/auth/login");
+}
+
 function getAuth(): DataAuth | null {
   const auth_access = Cookie.get("auth_access");
   const auth_refresh = Cookie.get("auth_refresh");
 
   if (!auth_access || !auth_refresh) return null;
+
+  return {
+    access: auth_access,
+    refresh: auth_refresh,
+  };
+}
+
+function getAuthWithRedirect(routerInstance: AppRouterInstance): DataAuth {
+  const auth_access = Cookie.get("auth_access");
+  const auth_refresh = Cookie.get("auth_refresh");
+
+  if (!auth_access || !auth_refresh) {
+    routerInstance.replace("/auth/login");
+    return { access: "", refresh: "" };
+  }
 
   return {
     access: auth_access,
@@ -57,17 +80,19 @@ function isTokenExpired(token: string): boolean {
   return !!exp && exp < Math.floor(Date.now() / 1000);
 }
 
-function getDataFromExpired(token: string): Payload {
+function getDataFromToken(token: string): Payload {
   return jwtDecode<Payload>(token);
 }
 
 const Auth = {
   setAuth,
   getAuth,
+  getAuthWithRedirect,
   removeAuth,
+  removeAuthWithRedirect,
   getCorrectRedirect,
   isTokenExpired,
-  getDataFromExpired,
+  getDataFromToken,
 };
 
 export default Auth;
