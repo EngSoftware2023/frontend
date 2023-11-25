@@ -10,8 +10,16 @@ import ElementInputText, {
 } from "../form-input-text/form-input-text";
 import ElementFormCepAddressNumber from "../form-cep-anddress-number/form-cep-address-number";
 import Api from "@/service/api/api";
+import { useRouter } from "next/navigation";
 
-export default function ElementFormRegisterProducer() {
+export type DataElementFormRegisterProducer = {
+  redirect?: string;
+};
+
+export default function ElementFormRegisterProducer({
+  redirect,
+}: DataElementFormRegisterProducer) {
+  const router = useRouter();
   const initialValue: FormInput = { value: "", valid: false, invalid: false };
 
   const [formData, setFormData] = useState<{
@@ -59,8 +67,6 @@ export default function ElementFormRegisterProducer() {
       password.valid &&
       telefone.valid;
 
-    console.log(validToSend, formData);
-
     if (validToSend) {
       submitStatus.loading = true;
       setSubmitStatus({ ...submitStatus });
@@ -75,16 +81,19 @@ export default function ElementFormRegisterProducer() {
           password: password.value,
         })
         .then((response) => {
-          console.log(response)
           setSubmitStatus({
             loading: false,
             send: true,
             success: true,
             text: "Cadastrado com sucesso !",
           });
+          if (redirect) {
+            router.replace(redirect);
+            return;
+          }
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
           setSubmitStatus({
             loading: false,
             send: true,

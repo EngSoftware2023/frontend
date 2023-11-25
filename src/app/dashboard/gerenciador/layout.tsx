@@ -5,6 +5,7 @@ import {
   FormOutlined,
   HomeOutlined,
   OrderedListOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 
 export type DataLayoutManeger = {
@@ -29,9 +30,14 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       link: "/dashboard/gerenciador/listar-produtores",
     },
     {
-      icon: <OrderedListOutlined />,
+       icon: <OrderedListOutlined />,
       name: "Listar Produções",
       link: "/dashboard/gerenciador/listar-producoes",
+    },
+    {
+      icon: <UnorderedListOutlined />,
+      name: "Listar Pedidos",
+      link: "/dashboard/gerenciador/listar-pedidos",
     },
   ];
 

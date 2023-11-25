@@ -38,4 +38,31 @@ export async function deteleProduction(id: number) {
         },
         redirect: 'follow'
     });
+export type BodyPostProdcution = {
+  producer: string;
+  product: string;
+  quantity: number;
+};
+
+export async function postProduction(body: BodyPostProdcution) {
+  const { producer, product, quantity } = body;
+
+  const formData = new FormData();
+
+  formData.append("producer", producer);
+  formData.append("product", product);
+  formData.append("quantity", String(quantity));
+
+  console.log(formData);
+
+  const response = await fetch(`${API_BASE}/production/`, {
+    method: "POST",
+    headers: {
+      "User-Agent": "frontend",
+    },
+    body: formData,
+    cache: "no-cache",
+  });
+
+  return response.json;
 }
