@@ -1,4 +1,4 @@
-import ListProduction from "@/components/sections/list-production/list-production";
+import ListProduction from "@/components/sections/list-production/list-production-admin";
 import style from "./producer-list.module.scss";
 import StructContainer from "@/components/structs/container/container";
 import Api from "@/service/api/api";
@@ -13,13 +13,14 @@ export default async function Page() {
 
   try {
     productions = await Api.public.getProductions();
+    console.log(productions);
   } catch (e) {
     console.log(e);
   }
 
   return (
     <main>
-      <ListProduction productions={productions}/>
+      <ListProduction productions={productions} />
     </main>
   );
 }

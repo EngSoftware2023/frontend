@@ -18,8 +18,9 @@ const Api = {
     updateProducers,
     getProducer,
     postProduction,
-    getProductions, deteleProduction
-    postLogin,
+    getProductions, 
+    deteleProduction,
+    postLogin
   },
 };
 
