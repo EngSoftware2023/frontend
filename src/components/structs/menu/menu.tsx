@@ -52,7 +52,7 @@ export default function StructMenu({ children, options }: DataStructMenu) {
         </div>
         <div className={style.footer}>
           <div className={style.userCard}>
-            <div className={style.userIcon}>{userData?.name.at(0)}</div>
+            <div className={style.userIcon}>{userData?.name?.at(0)}</div>
             <p className={style.userName}>{userData?.name}</p>
             <Button
               danger

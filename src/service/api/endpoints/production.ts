@@ -1,26 +1,44 @@
-import { API_BASE } from "../api";
+import { API_BASE, API_BASE_PUT } from "../api";
 
-export async function getProduction() {
-  // const formData = new FormData();
-  // formData.append("name", name);
-  // formData.append("phone", phone);
-  // formData.append("address", address);
-  // formData.append("cpf", cpf);
-  // formData.append("email", email);
-  // formData.append("password", password);
-  // console.log(formData);
-  // const response = await fetch(`${API_BASE}/producer/`, {
-  //   method: "POST",
-  //   mode: "no-cors",
-  //   headers: {
-  //     "User-Agent": "frontend",
-  //   },
-  //   body: formData,
-  //   cache: "no-cache",
-  // });
-  // return response.json;
+
+export enum ResponsePostProducer {
+  OK = 200,
+  ERROR = 400,
 }
 
+
+export type ResponseGetProduction = {
+  id: number,
+  quantity: number,
+  date: string,
+  producer: string,
+  product: string
+};
+
+
+export async function getProductions() {
+  const response = await fetch(`${API_BASE_PUT}/production/`, {
+    method: "GET",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+  });
+  return (await response.json()) as Array<ResponseGetProduction>;
+}
+
+export async function deteleProduction(id: number) {
+  const response = await fetch(`${API_BASE_PUT}/production/${id}`, {
+    method: "DELETE",
+    cache: "no-cache",
+    mode: "no-cors",
+    headers: {
+      "User-Agent": "frontend",
+    },
+    redirect: 'follow'
+  })
+};
 export type BodyPostProdcution = {
   producer: string;
   product: string;
@@ -48,4 +66,4 @@ export async function postProduction(body: BodyPostProdcution) {
   });
 
   return response.json;
-}
+};

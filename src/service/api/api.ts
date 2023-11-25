@@ -1,10 +1,11 @@
+
 import {
   postProducer,
   getProducers,
   updateProducers,
   getProducer,
 } from "./endpoints/producer";
-import { postProduction } from "./endpoints/production";
+import { postProduction, getProductions, deteleProduction } from "./endpoints/production";
 import { postLogin } from "./endpoints/login";
 
 export const API_BASE = "http://hendrickscheifer.pythonanywhere.com/api";
@@ -17,7 +18,9 @@ const Api = {
     updateProducers,
     getProducer,
     postProduction,
-    postLogin,
+    getProductions, 
+    deteleProduction,
+    postLogin
   },
 };
 
