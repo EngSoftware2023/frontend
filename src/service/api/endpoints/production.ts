@@ -1,30 +1,34 @@
-import { API_BASE, API_BASE_PUT } from "../api";
-
+import { API_BASE, API_BASE_PUT, API_BASE_ROOT } from "../api";
+import { DataAuth } from "@/service/auth/auth";
 
 export enum ResponsePostProducer {
   OK = 200,
   ERROR = 400,
 }
 
-
 export type ResponseGetProduction = {
-  id: number,
-  quantity: number,
-  date: string,
-  producer: string,
-  product: string
+  id: number;
+  quantity: number;
+  date: string;
+  producer: string;
+  product: string;
 };
 
-
-export async function getProductions() {
-  const response = await fetch(`${API_BASE_PUT}/production/`, {
+export async function getProductions(
+  auth: DataAuth
+): Promise<Array<ResponseGetProduction>> {
+  const response = await fetch(`${API_BASE_ROOT}/production/`, {
     method: "GET",
     mode: "no-cors",
     headers: {
-      "Content-Type": "application/json",
+      "User-Agent": "frontend",
+      Authorization: `Bearer ${auth.access}`,
     },
     cache: "no-cache",
   });
+
+  if (!response.ok) throw "Error get Production";
+
   return (await response.json()) as Array<ResponseGetProduction>;
 }
 
@@ -36,9 +40,9 @@ export async function deteleProduction(id: number) {
     headers: {
       "User-Agent": "frontend",
     },
-    redirect: 'follow'
-  })
-};
+    redirect: "follow",
+  });
+}
 export type BodyPostProdcution = {
   producer: string;
   product: string;
