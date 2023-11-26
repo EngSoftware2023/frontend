@@ -2,11 +2,12 @@ import FormSectionData from '@/components/elements/form-edit-production/form_sec
 import Api from '@/service/api/api';
 import { ResponseGetProducers } from '@/service/api/endpoints/producer';
 import { ResponseGetProduct } from '@/service/api/endpoints/product';
+import { IProduct } from '@/types/types';
 import Link from 'next/link';
 
 export default async function Page() {
     let producers: Array<ResponseGetProducers> = [];
-    let products: Array<ResponseGetProduct> = [];
+    let products: Array<IProduct> = [];
 
 
 

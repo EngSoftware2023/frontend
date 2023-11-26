@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { IProduct, IProduction, IUsers } from "@/types/types";
-import FormProduction from "./form_production";
+import FormProduction from "./form_production_producer";
 import style from "./form-register-producer.module.scss";
 import StructContainer from "@/components/structs/container/container";
 import { useSearchParams } from 'next/navigation';

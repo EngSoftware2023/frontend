@@ -65,10 +65,8 @@ export default function FormProduction({ production, producers, products }: IPro
                 .updateProduction({
                     producer: producer,
                     product: product,
-                    quantity: quantity.value,
-                    id: id.value,
-                    date: date.value
-
+                    quantity: parseInt(quantity.value),
+                    id: parseInt(id.value)
                 })
                 .then((response) => {
                     setSubmitStatus({
