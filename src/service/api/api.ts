@@ -1,10 +1,11 @@
+
 import {
   postProducer,
   getProducers,
   updateProducers,
   getProducer,
 } from "./endpoints/producer";
-import { getProduction, postProduction } from "./endpoints/production";
+import { getProduction, postProduction, getProductions, deteleProduction } from "./endpoints/production";
 import { postLogin } from "./endpoints/login";
 import { getProducts } from "./endpoints/products";
 
@@ -19,7 +20,9 @@ const Api = {
     updateProducers,
     getProducer,
     postProduction,
-    postLogin,
+    getProductions, 
+    deteleProduction,
+    postLogin
     getProducts,
     getProduction,
   },

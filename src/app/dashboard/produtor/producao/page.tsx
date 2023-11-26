@@ -3,6 +3,8 @@ import SectionAddProduction from "@/components/sections/add-production/add-produ
 import SectionListProduction from "@/components/sections/list-production/list-production";
 import Api from "@/service/api/api";
 import Auth from "@/service/auth/auth";
+import Api from "@/service/api/api";
+import { ResponseGetProduction } from "@/service/api/endpoints/production";
 
 export default async function PageProduction() {
   const access_token =
@@ -17,7 +19,7 @@ export default async function PageProduction() {
   return (
     <main>
       <SectionAddProduction products={products} />
-      <SectionListProduction />
+      <SectionListProduction  productions={productions} />
     </main>
   );
 }
