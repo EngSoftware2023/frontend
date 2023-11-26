@@ -17,9 +17,8 @@ export type ResponseGetProduction = {
 export async function getProductions(
   auth: DataAuth
 ): Promise<Array<ResponseGetProduction>> {
-  const response = await fetch(`${API_BASE_ROOT}/production/`, {
+  const response = await fetch(`${API_BASE}/production/`, {
     method: "GET",
-    mode: "no-cors",
     headers: {
       "User-Agent": "frontend",
       Authorization: `Bearer ${auth.access}`,
@@ -32,15 +31,16 @@ export async function getProductions(
   return (await response.json()) as Array<ResponseGetProduction>;
 }
 
-export async function deteleProduction(id: number) {
-  const response = await fetch(`${API_BASE_PUT}/production/${id}`, {
+export async function deteleProduction(auth: DataAuth, body: { id: number }) {
+  const response = await fetch(`${API_BASE}/production`, {
     method: "DELETE",
     cache: "no-cache",
-    mode: "no-cors",
     headers: {
       "User-Agent": "frontend",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.access}`,
     },
-    redirect: "follow",
+    body: JSON.stringify(body),
   });
 }
 export type BodyPostProdcution = {
@@ -52,21 +52,14 @@ export type BodyPostProdcution = {
 export async function postProduction(auth: DataAuth, body: BodyPostProdcution) {
   const { producer, product, quantity } = body;
 
-  const formData = new FormData();
-
-  formData.append("producer", producer);
-  formData.append("product", product);
-  formData.append("quantity", String(quantity));
-
-  console.log(formData);
-
   const response = await fetch(`${API_BASE}/production/`, {
     method: "POST",
     headers: {
       "User-Agent": "frontend",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${auth.access}`,
     },
-    body: formData,
+    body: JSON.stringify(body),
     cache: "no-cache",
   });
 

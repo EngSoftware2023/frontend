@@ -7,11 +7,13 @@ import Link from "next/link";
 import Api from "@/service/api/api";
 import { useEffect, useState } from "react";
 import Auth from "@/service/auth/auth";
+import { useRouter } from "next/navigation";
 export interface MyComponentProps {
   productions: ResponseGetProduction[];
 }
 
 export default function ListProduction({ productions }: MyComponentProps) {
+  const router = useRouter();
   const [filter, setFilter] = useState("");
   let token = Auth.getAuth();
   const [result, setResult] = useState<ResponseGetProduction[]>();
@@ -27,7 +29,8 @@ export default function ListProduction({ productions }: MyComponentProps) {
   }
 
   function DeleteProduction(id: number) {
-    Api.public.deteleProduction(id);
+    const auth = Auth.getAuthWithRedirect(router);
+    Api.public.deteleProduction(auth, { id });
   }
 
   useEffect(() => {
