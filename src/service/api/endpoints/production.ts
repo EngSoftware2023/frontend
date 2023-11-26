@@ -1,24 +1,20 @@
-import { API_BASE } from "../api";
+import { DataAuth } from "@/service/auth/auth";
+import { API_BASE, API_BASE_ROOT } from "../api";
 
-export async function getProduction() {
-  // const formData = new FormData();
-  // formData.append("name", name);
-  // formData.append("phone", phone);
-  // formData.append("address", address);
-  // formData.append("cpf", cpf);
-  // formData.append("email", email);
-  // formData.append("password", password);
-  // console.log(formData);
-  // const response = await fetch(`${API_BASE}/producer/`, {
-  //   method: "POST",
-  //   mode: "no-cors",
-  //   headers: {
-  //     "User-Agent": "frontend",
-  //   },
-  //   body: formData,
-  //   cache: "no-cache",
-  // });
-  // return response.json;
+export async function getProduction(auth: DataAuth) {
+  const response = await fetch(`${API_BASE_ROOT}/production/`, {
+    method: "GET",
+    mode: "no-cors",
+    headers: {
+      "User-Agent": "frontend",
+      Authorization: `Bearer ${auth.access}`,
+    },
+    cache: "no-cache",
+  });
+
+  if (!response.ok) throw "Error get Production";
+
+  return await response.json();
 }
 
 export type BodyPostProdcution = {
@@ -27,7 +23,7 @@ export type BodyPostProdcution = {
   quantity: number;
 };
 
-export async function postProduction(body: BodyPostProdcution) {
+export async function postProduction(auth: DataAuth, body: BodyPostProdcution) {
   const { producer, product, quantity } = body;
 
   const formData = new FormData();
@@ -42,10 +38,13 @@ export async function postProduction(body: BodyPostProdcution) {
     method: "POST",
     headers: {
       "User-Agent": "frontend",
+      Authorization: `Bearer ${auth.access}`,
     },
     body: formData,
     cache: "no-cache",
   });
 
-  return response.json;
+  if (!response.ok) throw "Error post Production";
+
+  return await response.json();
 }

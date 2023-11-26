@@ -71,7 +71,7 @@ export async function updateProducers(body: BodyPostProducer) {
   formData.append("cpf", cpf);
   formData.append("email", email);
   formData.append("password", password);
-  console.log("Data", body);
+  
   const response = await fetch(`${API_BASE_PUT}/producer/`, {
     method: "PUT",
     headers: {
