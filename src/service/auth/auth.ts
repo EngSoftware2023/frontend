@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 
@@ -84,6 +85,19 @@ function getDataFromToken(token: string): Payload {
   return jwtDecode<Payload>(token);
 }
 
+function getCokieFromHeaderList(
+  targetCookie: string,
+  headerList: ReadonlyHeaders
+) {
+  return headerList
+    .get("cookie")
+    ?.split(";")
+    .filter((cookie) => cookie.trim().split("=").at(0) === targetCookie)
+    .at(0)
+    ?.split("=")
+    .at(1);
+}
+
 const Auth = {
   setAuth,
   getAuth,
@@ -93,6 +107,7 @@ const Auth = {
   getCorrectRedirect,
   isTokenExpired,
   getDataFromToken,
+  getCokieFromHeaderList,
 };
 
 export default Auth;
