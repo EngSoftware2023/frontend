@@ -1,3 +1,4 @@
+import { IProduct } from "@/types/types";
 import { API_BASE, API_BASE_PUT } from "../api";
 
 
@@ -23,5 +24,5 @@ export async function getProducts() {
         },
         cache: "no-cache",
     });
-    return (await response.json()) as Array<ResponseGetProduct>;
+    return (await response.json()) as Array<IProduct>;
 }

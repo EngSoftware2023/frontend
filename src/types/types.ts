@@ -28,3 +28,9 @@ export  interface IProduction{
   date: string,
   id: string,
 }
+
+export interface IProduct{
+  stock: string,
+  name: string,
+  request: string,
+}
