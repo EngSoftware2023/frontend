@@ -29,9 +29,9 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       link: "/dashboard/gerenciador/listar-produtores",
     },
     {
-      icon: <FormOutlined />,
-      name: "Cadastrar Pedido",
-      link: "/dashboard/gerenciador/cadastrar-pedido",
+       icon: <OrderedListOutlined />,
+      name: "Listar Produções",
+      link: "/dashboard/gerenciador/listar-producoes",
     },
     {
       icon: <UnorderedListOutlined />,
