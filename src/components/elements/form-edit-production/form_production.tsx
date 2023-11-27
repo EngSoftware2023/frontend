@@ -11,12 +11,15 @@ import ElementInputText, {
 import ElementFormCepAddressNumber from "../form-cep-anddress-number/form-cep-address-number";
 import Api from "@/service/api/api";
 import { IProduct, IProduction, IUsers } from "@/types/types";
+import Auth from "@/service/auth/auth";
+import { useRouter } from "next/navigation";
 export interface IProps {
     production: IProduction,
     producers: IUsers[],
     products: IProduct[]
 }
 export default function FormProduction({ production, producers, products }: IProps) {
+    const router = useRouter();
     const [formData, setFormData] = useState<{
         producer: string;
         product: string;
@@ -57,6 +60,9 @@ export default function FormProduction({ production, producers, products }: IPro
             date &&
             id;
 
+        const auth = Auth.getAuthWithRedirect(router);
+        const payload = Auth.getDataFromToken(auth.access);
+
         if (validToSend) {
             submitStatus.loading = true;
             setSubmitStatus({ ...submitStatus });
@@ -67,7 +73,7 @@ export default function FormProduction({ production, producers, products }: IPro
                     product: product,
                     quantity: parseInt(quantity.value),
                     id: parseInt(id.value)
-                })
+                }, auth)
                 .then((response) => {
                     setSubmitStatus({
                         loading: false,

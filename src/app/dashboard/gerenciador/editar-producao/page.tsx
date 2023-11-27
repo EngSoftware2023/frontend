@@ -1,4 +1,4 @@
-import FormSectionData from '@/components/elements/form-edit-production/form_section_data';
+import FormSectionData from '@/components/elements/form-edit-production/form-production-data-admin';
 import Api from '@/service/api/api';
 import { ResponseGetProducers } from '@/service/api/endpoints/producer';
 import { ResponseGetProduct } from '@/service/api/endpoints/product';

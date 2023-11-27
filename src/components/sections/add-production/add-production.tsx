@@ -8,11 +8,12 @@ import StructContainer from "@/components/structs/container/container";
 import Api from "@/service/api/api";
 import { ResponseGetProducts } from "@/service/api/endpoints/products";
 import Auth from "@/service/auth/auth";
+import { IProduct } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export type DataSectionAddProduction = {
-  products: ResponseGetProducts;
+  products: IProduct[];
 };
 
 export default function SectionAddProduction({

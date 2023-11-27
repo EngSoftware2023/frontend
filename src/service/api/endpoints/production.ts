@@ -32,13 +32,15 @@ export async function getProductions(
 }
 
 export async function deteleProduction(auth: DataAuth, body: { id: number }) {
-  const response = await fetch(`${API_BASE}/production`, {
+  console.log("Acesso Body",auth.access)
+  const response = await fetch(`${API_BASE_ROOT}/production`, {
     method: "DELETE",
     cache: "no-cache",
     headers: {
       "User-Agent": "frontend",
-      "Authorization": `Bearer  ${Auth.getAuth()?.access}`
+      "Authorization": `Bearer  ${auth.access}}`
     },
+    body: JSON.stringify(body)
   });
   return response.json()
 }
@@ -71,9 +73,10 @@ export type BodyPutProdcution = {
   quantity: number;
   id: number;
 };
-export async function updateProduction(body: BodyPutProdcution) {
+export async function updateProduction(body: BodyPutProdcution, auth: DataAuth,) {
+  console.log(auth.access)
   const { producer, product, quantity, id } = body;
-
+  console.log(body.id)
   const formData = new FormData();
   formData.append("id", String(id));
   formData.append("producer", producer);
@@ -86,7 +89,7 @@ export async function updateProduction(body: BodyPutProdcution) {
     method: "PUT",
     headers: {
       "User-Agent": "frontend",
-      "Authorization": `Bearer  ${Auth.getAuth()?.access}`
+      "Authorization": `Bearer  ${auth.access}`
     },
     body: formData,
     cache: "no-cache",
