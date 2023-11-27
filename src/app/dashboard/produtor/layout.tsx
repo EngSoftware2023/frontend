@@ -28,11 +28,6 @@ const options = [
     name: "Produção",
     link: "/dashboard/produtor/producao",
   },
-  {
-    icon: <OrderedListOutlined />,
-    name: "Ver Relato de produção",
-    link: "/dashboard/produtor/verRelato",
-  },
 ];
 
 export default function LayoutProducer({ children }: DataLayoutProducer) {
