@@ -59,7 +59,6 @@ export async function getProducers() {
 
   return (await response.json()) as Array<ResponseGetProducers>;
 }
-
 export async function updateProducers(body: BodyPostProducer) {
   const { address, cpf, email, name, password, phone } = body;
   const formData = new FormData();
@@ -69,8 +68,7 @@ export async function updateProducers(body: BodyPostProducer) {
   formData.append("address", address);
   formData.append("cpf", cpf);
   formData.append("email", email);
-  formData.append("password", password);
-  const response = await fetch(`${API_BASE_PUT}/producer/`, {
+  formData.append("password", password);  const response = await fetch(`${API_BASE_PUT}/producer/`, {
     method: "PUT",
     headers: {
       "User-Agent": "frontend",
