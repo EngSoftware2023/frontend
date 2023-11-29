@@ -1,5 +1,6 @@
 "use client";
 import SectionAddOrder from "@/components/sections/add-order/add-order";
+import SectionListOrder from "@/components/sections/list-orders/list-orders";
 import Api from "@/service/api/api";
 import { DataGetOrders } from "@/service/api/endpoints/order";
 import Auth from "@/service/auth/auth";
@@ -27,9 +28,7 @@ export default function StructOrder({
           setOrders(await Api.private.getOrders(auth));
         }}
       />
-      {orders.map((order, index) => {
-        return <div key={index}>{order.name}</div>;
-      })}
+      <SectionListOrder orders={orders} />
     </>
   );
 }
