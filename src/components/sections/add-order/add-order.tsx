@@ -11,9 +11,10 @@ import Api from "@/service/api/api";
 
 export type DataSectionAddOrder = {
   productsList: Array<string>;
+  onUpdateOrder: () => void;
 };
 
-export default function SectionAddOrder({ productsList }: DataSectionAddOrder) {
+export default function SectionAddOrder({ productsList, onUpdateOrder }: DataSectionAddOrder) {
   const router = useRouter();
   const [form, setForm] = useFormOrder();
 
@@ -33,7 +34,7 @@ export default function SectionAddOrder({ productsList }: DataSectionAddOrder) {
       }),
     });
 
-    console.log(res);
+    onUpdateOrder();
   };
 
   return (

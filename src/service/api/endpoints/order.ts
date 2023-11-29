@@ -1,5 +1,5 @@
 import { DataAuth } from "@/service/auth/auth";
-import { API_BASE } from "../api";
+import { API_BASE, API_BASE_ROOT } from "../api";
 
 export type BodyPostOrder = {
   name: string;
@@ -26,4 +26,32 @@ export async function postOrder(auth: DataAuth, body: BodyPostOrder) {
   if (!res.ok) throw "Error post order";
 
   return res.statusText;
+}
+
+export type DataGetOrders = Array<{
+  id: number;
+  name: string;
+  date: string;
+  total: number;
+  status: string;
+  products: Array<{
+    product_name: string;
+    quantity: number;
+    price: number;
+  }>;
+}>;
+
+export async function getOrders(auth: DataAuth) {
+  const res = await fetch(`${API_BASE_ROOT}/order/`, {
+    method: "GET",
+    headers: {
+      "User-Agent": "frontend",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.access}`,
+    },
+  });
+
+  if (!res.ok) throw "Error get order";
+
+  return (await res.json()) as DataGetOrders;
 }
