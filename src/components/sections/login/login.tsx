@@ -36,7 +36,10 @@ export function SectionLogin() {
     forms.email.invalid = !Validation.isEmailValid(forms.email.value);
     forms.password.invalid = !Validation.isPasswordValid(forms.password.value);
 
+    console.log(forms);
+
     if (forms.email.invalid || forms.password.invalid) {
+      setError("Invalido");
       setForms({ ...forms });
       return;
     }
