@@ -2,43 +2,38 @@ import StructMenu from "@/components/structs/menu/menu";
 import React from "react";
 
 import {
-  FormOutlined,
-  ProfileOutlined,
+  FundOutlined,
   OrderedListOutlined,
   HomeOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
 
 export type DataLayoutProducer = {
   children: React.ReactNode;
 };
 
+const options = [
+  {
+    icon: <HomeOutlined />,
+    name: "Pagina inicial",
+    link: "/dashboard/produtor",
+  },
+  {
+    icon: <UserOutlined />,
+    name: "Ver Perfil",
+    link: "/dashboard/produtor/visualizar",
+  },
+  {
+    icon: <FundOutlined />,
+    name: "Produção",
+    link: "/dashboard/produtor/producao",
+  },
+];
+
 export default function LayoutProducer({ children }: DataLayoutProducer) {
   return (
     <main>
-      <StructMenu
-        options={[
-          {
-            icon: <HomeOutlined />,
-            name: "Pagina inicial",
-            link: "/dashboard/produtor",
-          },
-          {
-            icon: <ProfileOutlined />,
-            name: "Ver Perfil",
-            link: "/dashboard/produtor/visualizar",
-          },
-          {
-            icon: <OrderedListOutlined />,
-            name: "Ver Relato de produção",
-            link: "/dashboard/produtor/verRelato",
-          },
-        ]}
-      >
-        {children}
-      </StructMenu>
+      <StructMenu options={options}>{children}</StructMenu>
     </main>
   );
 }

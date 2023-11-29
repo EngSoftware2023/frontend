@@ -3,13 +3,15 @@ import StructContainer from "@/components/structs/container/container"
 import { ResponseGetOrders } from "@/service/api/endpoints/order"
 import { Button, Col, Modal, Row } from "antd"
 import style from "./producer-list.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormOrder from "@/components/elements/form-edit-order/form-edit-order";
+import { ResponseGetProducts } from "@/service/api/endpoints/products";
 
 export interface IProps {
-    orders: ResponseGetOrders[]
+    orders: ResponseGetOrders[],
+    products: ResponseGetProducts
 }
-export default function ListOrder({ orders }: IProps) {
+export default function ListOrder({ orders,products }: IProps) {
     const [order, setOrder] = useState<ResponseGetOrders>({
         id: '',
         name: '',
@@ -22,6 +24,7 @@ export default function ListOrder({ orders }: IProps) {
     const increment = (e: ResponseGetOrders) => {
         setOrder(e);
     };
+    useEffect(() => { })
     return (
         <section id={style.SectionProducerList}>
             <StructContainer>
@@ -72,7 +75,7 @@ export default function ListOrder({ orders }: IProps) {
                 onCancel={() => setOpen(false)}
                 width={'70%'}
             >
-                <FormOrder increment={increment} orderForm={order} />
+                <FormOrder increment={increment} orderForm={order} products={products}/>
             </Modal>
         </section>
     )

@@ -12,11 +12,14 @@ import ElementFormCepAddressNumber from "../form-cep-anddress-number/form-cep-ad
 import Api from "@/service/api/api";
 import { IUsers } from "@/types/types";
 import { ResponseGetOrders } from "@/service/api/endpoints/order";
+import { ResponseGetProducts } from "@/service/api/endpoints/products";
 export interface IProps {
     orderForm: ResponseGetOrders,
     increment: Function,
+    products: ResponseGetProducts
 }
-export default function FormOrder({ orderForm, increment }: IProps) {
+export default function FormOrder({ orderForm, increment, products }: IProps) {
+    console.log(orderForm)
     const [order, setOrderForm] = useState<ResponseGetOrders>({
         id: orderForm.id,
         name: orderForm.name,
@@ -69,6 +72,7 @@ export default function FormOrder({ orderForm, increment }: IProps) {
     });
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+        console.log(event)
         event.preventDefault();
         const { id, name, date, total, status, products } =
             formData;
@@ -163,7 +167,29 @@ export default function FormOrder({ orderForm, increment }: IProps) {
                         }}
                     />
                 </Col>
-                <div></div>
+                <div>
+                    <select>
+                        {
+                            products.map((e) => {
+                                return <option>{e.name}</option>
+                            })
+                        }
+                    </select>
+                    <input type="number" name="" id="" />
+                </div>
+                <ul>
+                    {
+                        produtos.map((prod) => {
+                            return (
+                                <li style={{ display: 'flex', justifyContent: '4px' }}>
+                                    <h2>Produto:{prod.product_name}</h2>
+                                    <h2 style={{ marginLeft: '20px', marginRight: '20px' }}>Quantidade:{prod.quantity}</h2>
+                                    <h2>Price:{prod.price}</h2>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
                 <Col className={style.containerButtons} span={24}>
                     {submitStatus.send && (
                         <Alert
@@ -181,19 +207,6 @@ export default function FormOrder({ orderForm, increment }: IProps) {
                         Atualizar
                     </Button>
                 </Col>
-                <ul>
-                    {
-                        produtos.map((prod) => {
-                            return (
-                                <li style={{ display: 'flex', justifyContent: '4px' }}>
-                                    <h2>Produto:{prod.product_name}</h2>
-                                    <h2 style={{ marginLeft: '20px', marginRight: '20px' }}>Quantidade:{prod.quantity}</h2>
-                                    <h2>Price:{prod.price}</h2>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
             </Row>
         </Form>
     );

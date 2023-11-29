@@ -27,7 +27,6 @@ export type ResponseGetOrders = {
 export async function getOrders() {
   const response = await fetch(`${API_BASE_PUT}/order/`, {
     method: "GET",
-    mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
     },
