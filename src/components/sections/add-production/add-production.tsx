@@ -30,8 +30,6 @@ export default function SectionAddProduction({
     const auth = Auth.getAuthWithRedirect(router);
     const payload = Auth.getDataFromToken(auth.access);
 
-    console.log(await Api.public.getProductions(auth));
-
     const response = await Api.public.postProduction(auth, {
       producer: payload.cpf,
       product: form.product.value,
