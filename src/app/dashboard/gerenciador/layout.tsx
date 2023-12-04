@@ -2,6 +2,7 @@ import StructMenu, { TypeOption } from "@/components/structs/menu/menu";
 import React from "react";
 
 import {
+  CopyOutlined,
   FormOutlined,
   HomeOutlined,
   OrderedListOutlined,
@@ -21,18 +22,23 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
     },
     {
       icon: <FormOutlined />,
-      name: "Cadastrar Produtores",
+      name: "Cadastrar Produtor",
       link: "/dashboard/gerenciador/cadastrar-produtor",
     },
     {
-      icon: <OrderedListOutlined />,
+      icon: <UnorderedListOutlined />,
       name: "Listar Produtores",
       link: "/dashboard/gerenciador/listar-produtores",
     },
     {
-      icon: <UnorderedListOutlined />,
-      name: "Listar Pedidos",
-      link: "/dashboard/gerenciador/listar-pedidos",
+      icon: <OrderedListOutlined />,
+      name: "Listar Produções",
+      link: "/dashboard/gerenciador/listar-producoes",
+    },
+    {
+      icon: <CopyOutlined />,
+      name: "Pedidos",
+      link: "/dashboard/gerenciador/pedidos",
     },
     {
       icon: <OrderedListOutlined />,

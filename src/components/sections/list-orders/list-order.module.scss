@@ -1,0 +1,14 @@
+#SectionListOrder {
+  .cardOrder{
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 15px 30px;
+
+    .cardProduct{
+      background-color: rgba(0, 0, 0, 0.042);
+      border-radius: 5px;
+      padding: 12px 15px;
+      margin: 5px;
+    }
+  }
+}
