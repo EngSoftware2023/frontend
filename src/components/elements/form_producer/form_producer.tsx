@@ -67,6 +67,7 @@ export default function FormProducer({ user }: IProps) {
     const access_token = Auth.getAuthWithRedirect(router);
 
     if (validToSend) {
+      console.log(name.value,telefone.value,address.value,email.value,cpf.value,password.value)
       submitStatus.loading = true;
       setSubmitStatus({ ...submitStatus });
 

@@ -63,7 +63,7 @@ export async function getProducers() {
 }
 
 export async function updateProducers(body: BodyPostProducer, auth: DataAuth) {
-  console.log(body)
+  console.log(body);
   const { address, cpf, email, name, password, phone } = body;
   const formData = new FormData();
 
@@ -81,7 +81,7 @@ export async function updateProducers(body: BodyPostProducer, auth: DataAuth) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${auth.access}`,
     },
-    body: formData,
+    body: JSON.stringify(body),
     cache: "no-cache",
   });
 
@@ -110,4 +110,24 @@ export async function getProducer(id: string): Promise<ResponseGetProducers> {
     console.error("error", error);
     throw error;
   }
+}
+
+type deleteProducer = {
+  cpf: string;
+}
+
+export async function deleteProducer(body: deleteProducer, auth: DataAuth) {
+  const { cpf } = body;
+  const response = await fetch(`${API_BASE}/producer/`, {
+    method: "DELETE",
+    headers: {
+      "User-Agent": "frontend",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.access}`,
+    },
+    body: JSON.stringify(body),
+    cache: "no-cache",
+  });
+
+  return response.json;
 }
