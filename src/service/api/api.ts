@@ -12,7 +12,8 @@ import {
 } from "./endpoints/production";
 import { postLogin } from "./endpoints/login";
 import { getProducts } from "./endpoints/products";
-import { getOrders, updateOrders } from "./endpoints/order";
+
+import { postOrder, getOrders ,updateOrders} from "./endpoints/order";
 
 export const API_BASE = "https://hendrickscheifer.pythonanywhere.com/api";
 export const API_BASE_ROOT = "https://hendrickscheifer.pythonanywhere.com";
@@ -32,6 +33,10 @@ const Api = {
     getProducts,
     getOrders,
     updateOrders
+  },
+  private: {
+    postOrder,
+    getOrders,
   },
 };
 
