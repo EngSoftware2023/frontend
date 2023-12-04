@@ -1,6 +1,6 @@
 import { API_BASE_ROOT } from "../api";
 
-type DataProduct = {
+ type DataProduct = {
   name: string;
   stock: number;
   request: number;

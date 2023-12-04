@@ -9,8 +9,6 @@ import Link from "next/link";
 
 export default async function Page() {
   let productions: Array<ResponseGetProduction> = [];
-
-
   try {
     productions = await Api.public.getProductions();
     console.log(productions);
