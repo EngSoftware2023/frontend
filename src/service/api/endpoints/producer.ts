@@ -1,5 +1,6 @@
 import { IUsers } from "@/types/types";
 import { API_BASE, API_BASE_PUT } from "../api";
+import { DataAuth } from "@/service/auth/auth";
 
 export enum ResponsePostProducer {
   OK = 200,
@@ -61,7 +62,8 @@ export async function getProducers() {
   return (await response.json()) as Array<ResponseGetProducers>;
 }
 
-export async function updateProducers(body: BodyPostProducer) {
+export async function updateProducers(body: BodyPostProducer, auth: DataAuth) {
+  console.log(body);
   const { address, cpf, email, name, password, phone } = body;
   const formData = new FormData();
 
@@ -71,13 +73,15 @@ export async function updateProducers(body: BodyPostProducer) {
   formData.append("cpf", cpf);
   formData.append("email", email);
   formData.append("password", password);
-  
-  const response = await fetch(`${API_BASE_PUT}/producer/`, {
+
+  const response = await fetch(`${API_BASE}/producer/`, {
     method: "PUT",
     headers: {
       "User-Agent": "frontend",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.access}`,
     },
-    body: formData,
+    body: JSON.stringify(body),
     cache: "no-cache",
   });
 
@@ -106,4 +110,24 @@ export async function getProducer(id: string): Promise<ResponseGetProducers> {
     console.error("error", error);
     throw error;
   }
+}
+
+type deleteProducer = {
+  cpf: string;
+}
+
+export async function deleteProducer(body: deleteProducer, auth: DataAuth) {
+  const { cpf } = body;
+  const response = await fetch(`${API_BASE}/producer/`, {
+    method: "DELETE",
+    headers: {
+      "User-Agent": "frontend",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.access}`,
+    },
+    body: JSON.stringify(body),
+    cache: "no-cache",
+  });
+
+  return response.json;
 }

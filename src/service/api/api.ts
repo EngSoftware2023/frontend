@@ -4,6 +4,7 @@ import {
   getProducers,
   updateProducers,
   getProducer,
+  deleteProducer
 } from "./endpoints/producer";
 import {
   postProduction,
@@ -34,6 +35,7 @@ const Api = {
     getOrders,
     updateOrders,
     deleteOrder
+    deleteProducer
   },
   private: {
     postOrder,
