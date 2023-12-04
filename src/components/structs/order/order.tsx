@@ -18,7 +18,6 @@ export default function StructOrder({
 }: DataStructOrder) {
   const router = useRouter();
   const [orders, setOrders] = useState<DataGetOrders>(initialOrders);
-
   return (
     <>
       <SectionAddOrder
@@ -28,7 +27,7 @@ export default function StructOrder({
           setOrders(await Api.private.getOrders(auth));
         }}
       />
-      <SectionListOrder orders={orders} />
+      <SectionListOrder orders={orders} products={products}/>
     </>
   );
 }

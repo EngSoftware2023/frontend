@@ -36,11 +36,6 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       link: "/dashboard/gerenciador/listar-producoes",
     },
     {
-      icon: <UnorderedListOutlined />,
-      name: "Listar Pedidos",
-      link: "/dashboard/gerenciador/listar-pedidos",
-    },
-    {
       icon: <CopyOutlined />,
       name: "Pedidos",
       link: "/dashboard/gerenciador/pedidos",
