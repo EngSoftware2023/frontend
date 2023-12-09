@@ -1,5 +1,5 @@
 'use client'
-import { Button, Col, Row } from "antd";
+import { Button, Col, Modal, Row } from "antd";
 import StructContainer from "@/components/structs/container/container";
 import style from "./producer-list.module.scss";
 import { ResponseGetProduction } from "@/service/api/endpoints/production";
@@ -13,6 +13,7 @@ export interface MyComponentProps {
 }
 export default function ListProduction({ productions }: MyComponentProps) {
     const router = useRouter();
+    const [id, setId] = useState(0)
     const [filter, setFilter] = useState('');
     const [result, setResult] = useState<ResponseGetProduction[]>();
     function formatarData(dataString: string): string {
@@ -21,10 +22,33 @@ export default function ListProduction({ productions }: MyComponentProps) {
         return dataFormatada;
     }
 
+    const [open, setOpen] = useState(false);
+    const [confirmLoading, setConfirmLoading] = useState(false);
+    const [modalText, setModalText] = useState('Content of the modal');
+
+    const showModal = () => {
+        setOpen(true);
+    };
+
+    const handleOk = () => {
+        setModalText('The modal will be closed after two seconds');
+        setConfirmLoading(true);
+        setTimeout(() => {
+            setOpen(false);
+            setConfirmLoading(false);
+        }, 2000);
+    };
+
+    const handleCancel = () => {
+        console.log('Clicked cancel button');
+        setOpen(false);
+    };
+
+
     function DeleteProduction(id: number) {
         const auth = Auth.getAuthWithRedirect(router);
         const payload = Auth.getDataFromToken(auth.access);
-        
+
         Api.public.deteleProduction(auth, { id })
     }
 
@@ -83,10 +107,10 @@ export default function ListProduction({ productions }: MyComponentProps) {
                                                                             <Button>Editar</Button>
                                                                         </Link>
                                                                     </Col>
-                                                                    <Col span={2} className={style.containerButton} onClick={() => { DeleteProduction(id) }}>
+                                                                    {/* <Col span={2} className={style.containerButton} onClick={() => { showModal(), setId(id) }}>
 
                                                                         <Button>Deletar</Button>
-                                                                    </Col>
+                                                                    </Col> */}
                                                                 </Row>
                                                             </div>
                                                         </Col>
@@ -130,10 +154,10 @@ export default function ListProduction({ productions }: MyComponentProps) {
                                                                                                 <Button>Editar</Button>
                                                                                             </Link>
                                                                                         </Col>
-                                                                                        <Col span={2} className={style.containerButton} onClick={() => { DeleteProduction(id) }}>
+                                                                                        {/* <Col span={2} className={style.containerButton} onClick={() => { setOpen(true) }}>
 
                                                                                             <Button>Deletar</Button>
-                                                                                        </Col>
+                                                                                        </Col> */}
                                                                                     </Row>
                                                                                 </div>
                                                                             </Col>
@@ -153,6 +177,15 @@ export default function ListProduction({ productions }: MyComponentProps) {
                     </Row>
                 </StructContainer>
             </section>
+            <Modal
+                title="Atenção"
+                open={open}
+                onOk={() => { handleOk(), DeleteProduction(id) }}
+                confirmLoading={confirmLoading}
+                onCancel={handleCancel}
+            >
+                <p>Deseja deletar esta produção?</p>
+            </Modal>
         </>
     )
 }

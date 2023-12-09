@@ -40,11 +40,6 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       name: "Pedidos",
       link: "/dashboard/gerenciador/pedidos",
     },
-    {
-      icon: <OrderedListOutlined />,
-      name: "Listar Produções",
-      link: "/dashboard/gerenciador/listar-producoes",
-    }
   ];
 
   return (

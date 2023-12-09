@@ -24,7 +24,7 @@ export default function FormProduction({ production, producers, products }: IPro
         producer: string;
         product: string;
         quantity: FormInput;
-        id: FormInput;
+        id: string;
         date: FormInput;
 
     }>({
@@ -32,7 +32,7 @@ export default function FormProduction({ production, producers, products }: IPro
         product: production.product,
         quantity: { value: production.quantity, valid: true, invalid: true },
         date: { value: production.date, valid: true, invalid: true },
-        id: { value: production.id, valid: true, invalid: true },
+        id:production.id,
 
     });
 
@@ -72,7 +72,7 @@ export default function FormProduction({ production, producers, products }: IPro
                     producer: producer,
                     product: product,
                     quantity: parseInt(quantity.value),
-                    id: parseInt(id.value)
+                    id: parseInt(id),
                 }, auth)
                 .then((response) => {
                     setSubmitStatus({
@@ -81,6 +81,7 @@ export default function FormProduction({ production, producers, products }: IPro
                         success: true,
                         text: "Atualizado com sucesso !",
                     });
+                    router.push("/dashboard/gerenciador/listar-producoes")
                 })
                 .catch((error) => {
                     console.log(error)
@@ -160,17 +161,8 @@ export default function FormProduction({ production, producers, products }: IPro
                     />
                 </Col>
                 <Col span={12}>
-                    <ElementInputText
-                        label="Id"
-                        required
-                        isValid={Validation.isANumber}
-                        isInvalid={Validation.isNotNumber}
-                        value={formData.id}
-                        setValue={(newValue) => {
-                            formData.id = newValue;
-                            setFormData({ ...formData });
-                        }}
-                    />
+                    <label htmlFor="id">Id: </label>
+                    <input style={{marginTop:"25px",padding:'8px'}} type="number" value={production.id} disabled />
                 </Col>
 
                 <Col className={style.containerButtons} span={24}>

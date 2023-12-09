@@ -32,8 +32,9 @@ export async function getProductions(
 }
 
 export async function deteleProduction(auth: DataAuth, body: { id: number }) {
-  console.log("Acesso Body",auth.access)
-  const response = await fetch(`${API_BASE_ROOT}/production`, {
+  const { id} = body;
+
+  const response = await fetch(`${API_BASE}/production`, {
     method: "DELETE",
     cache: "no-cache",
     headers: {
@@ -74,9 +75,7 @@ export type BodyPutProdcution = {
   id: number;
 };
 export async function updateProduction(body: BodyPutProdcution, auth: DataAuth,) {
-  console.log(auth.access)
   const { producer, product, quantity, id } = body;
-  console.log(body.id)
   const formData = new FormData();
   formData.append("id", String(id));
   formData.append("producer", producer);
@@ -89,9 +88,10 @@ export async function updateProduction(body: BodyPutProdcution, auth: DataAuth,)
     method: "PUT",
     headers: {
       "User-Agent": "frontend",
-      "Authorization": `Bearer  ${auth.access}`
+      "Authorization": `Bearer  ${auth.access}`,
+      "Content-Type": "application/json"
     },
-    body: formData,
+    body: JSON.stringify(body),
     cache: "no-cache",
   });
   if (!response.ok) throw "Error post Production";
