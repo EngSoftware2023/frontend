@@ -40,6 +40,7 @@ export default function ListProduction({ productions }: MyComponentProps) {
     }
   }, []);
 
+
   return (
     <>
       <section id={style.SectionProducerList}>
@@ -95,7 +96,7 @@ export default function ListProduction({ productions }: MyComponentProps) {
                           </Col>
                           <Col span={2} className={style.containerButton}>
                             <Link
-                              href={`/dashboard/gerenciador/editar-producao?id=${id}&quantity=${quantity}&date=${date}&producer=${producer}&product=${product}`}
+                              href={`/dashboard/produtor/producao/editar-producao?id=${id}&quantity=${quantity}&date=${date}&producer=${producer}&product=${product}`}
                               title={`Editar`}
                             >
                               <Button>Editar</Button>

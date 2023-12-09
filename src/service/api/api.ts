@@ -1,4 +1,3 @@
-
 import {
   postProducer,
   getProducers,
@@ -10,9 +9,12 @@ import {
   postProduction,
   getProductions,
   deteleProduction,
+  updateProduction
 } from "./endpoints/production";
 import { postLogin } from "./endpoints/login";
-import { getProducts } from "./endpoints/products";
+import { getProducts } from "./endpoints/product";
+
+
 
 import { postOrder, getOrders, updateOrders, deleteOrder } from "./endpoints/order";
 
@@ -32,9 +34,10 @@ const Api = {
     deteleProduction,
     postLogin,
     getProducts,
+    updateProduction,
     getOrders,
     updateOrders,
-    deleteOrder
+    deleteOrder,
     deleteProducer
   },
   private: {

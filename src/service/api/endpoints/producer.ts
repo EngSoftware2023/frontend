@@ -27,7 +27,6 @@ export async function postProducer(body: BodyPostProducer) {
   formData.append("cpf", cpf);
   formData.append("email", email);
   formData.append("password", password);
-
   const response = await fetch(`${API_BASE}/producer/`, {
     method: "POST",
     headers: {
@@ -62,8 +61,8 @@ export async function getProducers() {
   return (await response.json()) as Array<ResponseGetProducers>;
 }
 
+
 export async function updateProducers(body: BodyPostProducer, auth: DataAuth) {
-  console.log(body);
   const { address, cpf, email, name, password, phone } = body;
   const formData = new FormData();
 
@@ -72,6 +71,7 @@ export async function updateProducers(body: BodyPostProducer, auth: DataAuth) {
   formData.append("address", address);
   formData.append("cpf", cpf);
   formData.append("email", email);
+
   formData.append("password", password);
 
   const response = await fetch(`${API_BASE}/producer/`, {

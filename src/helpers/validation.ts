@@ -29,6 +29,16 @@ export function isEmailValid(email: string): boolean {
   return regex.test(email?.toLowerCase());
 }
 
+export function isANumber(number: string): boolean {
+  console.log(/^\d+$/.test(number))
+
+  return /^\d+$/.test(number);
+}
+
+export function isNotNumber(number: string): boolean {
+  console.log(!/^\d+$/.test(number))
+  return !/^\d+$/.test(number);
+}
 export function isEmailInvalid(email: string): boolean {
   if (!email.length) return false;
 
@@ -68,6 +78,8 @@ const Validation = {
   isCPFInvalid,
   isEmailValid,
   isEmailInvalid,
+  isANumber,
+  isNotNumber,
   isNameMinimumValid,
   isPasswordMinimumValid,
   isPasswordValid,
