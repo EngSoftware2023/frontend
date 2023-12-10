@@ -1,4 +1,4 @@
-import SectionListProducts from "@/components/sections/list-products/list-products";
+import StructProductManager from "@/components/structs/product-manager/product-manager";
 import Api from "@/service/api/api";
 
 export default async function PageProducts() {
@@ -6,7 +6,7 @@ export default async function PageProducts() {
 
   return (
     <main>
-      <SectionListProducts products={products} />
+      <StructProductManager initProducts={products} />
     </main>
   );
 }

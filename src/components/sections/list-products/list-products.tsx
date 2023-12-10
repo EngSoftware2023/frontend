@@ -1,8 +1,7 @@
 import style from "./list-products.module.scss";
 import StructContainer from "@/components/structs/container/container";
 import { IProduct } from "@/types/types";
-import { Col, Flex, Row } from "antd";
-import Title from "antd/es/typography/Title";
+import { Col, Row } from "antd";
 
 export type DataSectionListProducts = {
   products: Array<IProduct>;
@@ -14,9 +13,9 @@ export default function SectionListProducts({
   return (
     <section id={style.SectionListProducts}>
       <StructContainer>
-        <Title>Listagem de produtos</Title>
-        <hr className={style.divider}/>
-        <Row gutter={30}>
+        <h2>Listagem de produtos</h2>
+        <hr className={style.divider} />
+        <Row gutter={[30, 30]}>
           {products.map(({ name, request, stock }, index) => (
             <Col key={index} lg={8}>
               <div
