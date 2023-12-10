@@ -24,5 +24,8 @@ export async function getProducts() {
         },
         cache: "no-cache",
     });
+
+    if(!response.ok) throw("Error on get Products")
+
     return (await response.json()) as Array<IProduct>;
 }
