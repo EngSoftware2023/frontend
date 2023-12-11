@@ -1,14 +1,18 @@
+import ElementCardProduct from "@/components/elements/card-product/card-product";
 import style from "./list-products.module.scss";
 import StructContainer from "@/components/structs/container/container";
 import { IProduct } from "@/types/types";
 import { Col, Row } from "antd";
+import Api from "@/service/api/api";
 
 export type DataSectionListProducts = {
   products: Array<IProduct>;
+  onEvent: () => void;
 };
 
 export default function SectionListProducts({
   products,
+  onEvent,
 }: DataSectionListProducts) {
   return (
     <section id={style.SectionListProducts}>
@@ -18,26 +22,16 @@ export default function SectionListProducts({
         <Row gutter={[30, 30]}>
           {products.map(({ name, request, stock }, index) => (
             <Col key={index} lg={8}>
-              <div
-                className={style.containerProduct}
-                style={{
-                  border: `solid 2px rgba(${stock < request ? 255 : 0}, ${
-                    stock < request ? 0 : 255
-                  }, 0, .3)`,
+              <ElementCardProduct
+                name={name}
+                request={request}
+                stock={stock}
+                onDelete={async () => {
+                  await Api.public.deleteProduct({ nome: name });
+
+                  onEvent();
                 }}
-              >
-                <h3>{name}</h3>
-                <div className={style.containerIndicadores}>
-                  <div className={style.indicador}>
-                    <span className={style.title}>Pedidos</span>
-                    <span>{request}</span>
-                  </div>
-                  <div className={`${style.indicador} ${style.stock}`}>
-                    <span className={style.title}>Em Estoque</span>
-                    <span>{stock}</span>
-                  </div>
-                </div>
-              </div>
+              />
             </Col>
           ))}
         </Row>

@@ -12,7 +12,7 @@ import {
   updateProduction,
 } from "./endpoints/production";
 import { postLogin } from "./endpoints/login";
-import { getProducts, postProduct } from "./endpoints/product";
+import { getProducts, postProduct, deleteProduct } from "./endpoints/product";
 
 import {
   postOrder,
@@ -42,6 +42,7 @@ const Api = {
     deleteOrder,
     deleteProducer,
     postProduct,
+    deleteProduct,
   },
   private: {
     postOrder,

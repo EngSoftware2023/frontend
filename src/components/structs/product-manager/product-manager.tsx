@@ -14,7 +14,7 @@ export default function StructProductManager({
 }: DataStructProductManager) {
   const [products, setProducts] = useState<Array<IProduct>>(initProducts);
 
-  const newProducts = () => {
+  const updateProducts = () => {
     Api.public
       .getProducts()
       .then((response) => setProducts(response))
@@ -23,8 +23,8 @@ export default function StructProductManager({
 
   return (
     <>
-      <SectionAddProduct onEvent={newProducts} />
-      <SectionListProducts products={products} />
+      <SectionAddProduct onEvent={updateProducts} />
+      <SectionListProducts onEvent={updateProducts} products={products} />
     </>
   );
 }
