@@ -4,10 +4,12 @@ import React from "react";
 import {
   CopyOutlined,
   FormOutlined,
+  FundOutlined,
   HomeOutlined,
   InboxOutlined,
   OrderedListOutlined,
   UnorderedListOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 export type DataLayoutManeger = {
@@ -22,19 +24,14 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       link: "/dashboard/gerenciador",
     },
     {
-      icon: <FormOutlined />,
-      name: "Cadastrar Produtor",
-      link: "/dashboard/gerenciador/cadastrar-produtor",
+      icon: <UserOutlined />,
+      name: "Produtor",
+      link: "/dashboard/gerenciador/produtor",
     },
     {
-      icon: <UnorderedListOutlined />,
-      name: "Listar Produtores",
-      link: "/dashboard/gerenciador/listar-produtores",
-    },
-    {
-      icon: <OrderedListOutlined />,
-      name: "Listar Produções",
-      link: "/dashboard/gerenciador/listar-producoes",
+      icon: <FundOutlined />,
+      name: "Produção",
+      link: "/dashboard/gerenciador/producao",
     },
     {
       icon: <CopyOutlined />,
