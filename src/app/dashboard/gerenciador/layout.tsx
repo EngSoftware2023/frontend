@@ -5,6 +5,7 @@ import {
   CopyOutlined,
   FormOutlined,
   HomeOutlined,
+  InboxOutlined,
   OrderedListOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
@@ -39,6 +40,11 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       icon: <CopyOutlined />,
       name: "Pedidos",
       link: "/dashboard/gerenciador/pedidos",
+    },
+    {
+      icon: <InboxOutlined />,
+      name: "Produtos",
+      link: "/dashboard/gerenciador/produtos",
     },
   ];
 
