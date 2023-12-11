@@ -12,6 +12,7 @@ export interface IProps {
     productsMatch: IProduct[];
 }
 export default function MatchOrder({ orderForm, productsMatch }: IProps) {
+    console.log('Floi', productsMatch)
     let count = 0;
     const router = useRouter();
     const access_token = Auth.getAuthWithRedirect(router);
@@ -44,13 +45,23 @@ export default function MatchOrder({ orderForm, productsMatch }: IProps) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const productions = await Api.public.getProductions(access_token);
-            setGetProduction(productions)
+            try {
+                const productions = await Api.public.getProductions(access_token);
+                setGetProduction(productions);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
-        fetchData();
-        console.log('this',productionsGet)
-    }, []);
+        // Only fetch data if productionsGet is not defined or has changed
+        if (typeof productionsGet === 'undefined') {
+            fetchData();
+        }
+
+        console.log('this', productionsGet);
+
+    }, [productionsGet, setGetProduction]);
+
 
 
 
@@ -72,13 +83,12 @@ export default function MatchOrder({ orderForm, productsMatch }: IProps) {
                                     productsMatch.map((match) => {
                                         if (match.name == e.product_name) {
                                             return <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                                                <h4 className={isAvailableInStock ? style.textSucesso : style.textError}>Quantidade em estoque{match.stock}</h4>
-                                                <Button onClick={() => { setOpen(true),setProduto(match.name)}} style={{ background: 'white', color: 'black' }}>Ver produtores</Button>
+                                                <h4 onClick={() => { setOpen(true), setProduto(match.name) }} className={isAvailableInStock ? style.textSucesso : style.textError}>Quantidade em estoque: {match.stock}</h4>
+                                                <Button onClick={() => { setOpen(true), setProduto(match.name) }} style={{ background: 'white', color: 'black' }}>Ver produtores</Button>
                                             </div>
                                         }
                                     })
                                 }
-                                <h4 className={isAvailableInStock ? style.textSucesso : style.textError}>Disponível em estoque: {isAvailableInStock ? 'Sim' : 'Não'}</h4>
                             </div>
                         )
                     })
@@ -100,12 +110,13 @@ export default function MatchOrder({ orderForm, productsMatch }: IProps) {
                         <div>
                             {
                                 productionsGet?.map((e) => {
-                                    if (e.product == produto) {
+                                    console.log(e, produto)
+                                    if (e.product.toLocaleLowerCase() == produto.toLocaleLowerCase()) {
                                         return (
-                                            <div>
-                                                <h2>produtor {e.producer}</h2>
-                                                <h2>quantidade: {e.quantity}</h2>
-                                                <h2>quantidade: {e.date}</h2>
+                                            <div style={{border:'1px solid black',padding:'10px',borderRadius:'10px',margin:'10px 0px'}}>
+                                                <h4>produtor {e.producer}</h4>
+                                                <h4>quantidade: {e.quantity}</h4>
+                                                <h4>quantidade: {e.date}</h4>
                                             </div>)
                                     }
                                 })
