@@ -19,8 +19,6 @@ export default function SectionAddOrder({ productsList, onUpdateOrder }: DataSec
   const [form, setForm] = useFormOrder();
 
   const onSubmit = async (form: FormOrderFilds) => {
-    console.log("Olha o formulario", form);
-
     const auth = Auth.getAuthWithRedirect(router);
 
     const res = await Api.private.postOrder(auth, {
