@@ -24,11 +24,6 @@ export default function LayoutManager({ children }: DataLayoutManeger) {
       link: "/dashboard/gerenciador",
     },
     {
-      icon: <FormOutlined />,
-      name: "Cadastrar Produtor",
-      link: "/dashboard/gerenciador/cadastrar-produtor",
-    },
-    {
       icon: <UserOutlined />,
       name: "Produtor",
       link: "/dashboard/gerenciador/produtor",

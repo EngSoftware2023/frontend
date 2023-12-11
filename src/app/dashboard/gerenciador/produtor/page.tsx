@@ -1,10 +1,11 @@
 "use client";
+import SectionRegisterProducer from "@/components/sections/resgister-producer/register-producer";
 import style from "./producer-list.module.scss";
 import StructContainer from "@/components/structs/container/container";
 import Api from "@/service/api/api";
 import { ResponseGetProducers } from "@/service/api/endpoints/producer";
 import Auth from "@/service/auth/auth";
-import { Button, Col, Modal, Row } from "antd";
+import { Button, Col, Collapse, Modal, Row } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -46,62 +47,70 @@ export default function PageProducer() {
 
   return (
     <main>
+      <section id={style.SectionRegisterProducerCollapser}>
+        <StructContainer>
+          <Collapse
+            items={[
+              {
+                label: "Formulario para cadastro de produtor",
+                children: <SectionRegisterProducer />,
+              },
+            ]}
+          />
+        </StructContainer>
+      </section>
       <section id={style.SectionProducerList}>
-        {producers.length > 0 ? (
-          <StructContainer>
-            <h1>Listagem dos Produtores Cadastrados</h1>
-            <hr />
-            <Row gutter={[12, 15]}>
-              {producers.map(
-                (
-                  { address, cpf, email, name, password, phone, productions },
-                  index
-                ) => (
-                  <Col key={index} span={24}>
-                    <div className={style.cardProducer}>
-                      <Row>
-                        <Col span={20}>
-                          <h3>
-                            {name} - {cpf}
-                          </h3>
-                          <p>
-                            <strong>Endereço: </strong>
-                            {address}
-                          </p>
-                          <p>
-                            <strong>Numero: </strong>
-                            {phone}
-                            <strong> Email: </strong>
-                            {email}
-                          </p>
-                        </Col>
-                        <Col span={4} className={style.containerButton}>
-                          <Link
-                            href={`/dashboard/gerenciador/editar-produtor/${cpf}?name=${name}&phone=${phone}&email=${email}&cpf=${cpf}&address=${address}&password=${password}`}
-                            title={`Editar ${name}`}
-                          >
-                            <Button>Editar</Button>
-                          </Link>
+        <StructContainer>
+          <h2>Listagem dos Produtores Cadastrados</h2>
+          <hr />
+          <Row gutter={[12, 15]}>
+            {producers.map(
+              (
+                { address, cpf, email, name, password, phone, productions },
+                index
+              ) => (
+                <Col key={index} span={24}>
+                  <div className={style.cardProducer}>
+                    <Row>
+                      <Col span={20}>
+                        <h3>
+                          {name} - {cpf}
+                        </h3>
+                        <p>
+                          <strong>Endereço: </strong>
+                          {address}
+                        </p>
+                        <p>
+                          <strong>Numero: </strong>
+                          {phone}
+                          <strong> Email: </strong>
+                          {email}
+                        </p>
+                      </Col>
+                      <Col span={4} className={style.containerButton}>
+                        <Link
+                          href={`/dashboard/gerenciador/editar-produtor/${cpf}?name=${name}&phone=${phone}&email=${email}&cpf=${cpf}&address=${address}&password=${password}`}
+                          title={`Editar ${name}`}
+                        >
+                          <Button>Editar</Button>
+                        </Link>
 
-                          <Button
-                            style={{ marginLeft: "10px" }}
-                            onClick={() => {
-                              setOpen(true), setId(cpf);
-                            }}
-                          >
-                            Excluir
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Col>
-                )
-              )}
-            </Row>
-          </StructContainer>
-        ) : (
-          <h2>Carregando dados</h2>
-        )}
+                        <Button
+                          style={{ marginLeft: "10px" }}
+                          onClick={() => {
+                            setOpen(true), setId(cpf);
+                          }}
+                        >
+                          Excluir
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+              )
+            )}
+          </Row>
+        </StructContainer>
       </section>
       <Modal
         title="Produtor deletado"

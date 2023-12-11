@@ -54,9 +54,20 @@ export default function FormSectionData() {
 
   return (
     <StructContainer className={style.containerForms}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <h2>Atualização de cadastro</h2>
-        <Link href={'/dashboard/gerenciador/listar-produtores'} style={{color:'red'}}>[x]</Link>
+        <Link
+          href={"/dashboard/gerenciador/listar-produtores"}
+          style={{ color: "red" }}
+        >
+          [x]
+        </Link>
       </div>
       <hr className={style.divisor} />
       {user.name != "" ? <FormProducer user={user} /> : <></>}
