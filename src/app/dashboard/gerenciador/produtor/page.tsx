@@ -4,7 +4,7 @@ import style from "./producer-list.module.scss";
 import StructContainer from "@/components/structs/container/container";
 import Api from "@/service/api/api";
 import { ResponseGetProducers } from "@/service/api/endpoints/producer";
-import Auth from "@/service/auth/auth";
+import Auth, { DataAuth } from "@/service/auth/auth";
 import { Button, Col, Collapse, Modal, Row } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,11 +15,12 @@ export default function PageProducer() {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState<string>();
   const router = useRouter();
-  const access_token = Auth.getAuthWithRedirect(router);
   const [modal1Open, setModal1Open] = useState(false);
 
+  const [access_token, setAccessToken] = useState<DataAuth | null>(null);
+
   function deleteProducer() {
-    if (id) {
+    if (id && access_token) {
       Api.public
         .deleteProducer({ cpf: id }, access_token)
         .then((response) => {
@@ -35,6 +36,7 @@ export default function PageProducer() {
   useEffect(() => {
     const fetchProducers = async () => {
       try {
+        setAccessToken(Auth.getAuthWithRedirect(router));
         let getProducers = await Api.public.getProducers();
         setProducers(getProducers);
       } catch (e) {
