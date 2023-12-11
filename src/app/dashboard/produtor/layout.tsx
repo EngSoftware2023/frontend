@@ -1,12 +1,7 @@
 import StructMenu from "@/components/structs/menu/menu";
 import React from "react";
 
-import {
-  FundOutlined,
-  OrderedListOutlined,
-  HomeOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { FundOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 
 export type DataLayoutProducer = {
   children: React.ReactNode;
