@@ -7,9 +7,9 @@ import Auth from "@/service/auth/auth";
 import { Button, Col, Modal, Row } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function PageProducerList() {
+export default function PageProducer() {
   const [producers, setProducers] = useState<ResponseGetProducers[]>([]);
   const [open, setOpen] = useState(false);
   const [id, setId] = useState<string>();

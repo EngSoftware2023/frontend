@@ -1,7 +1,9 @@
+import SectionHomeManager from "@/components/sections/home-manager/home-manager";
+
 export default function PageHomeManager() {
   return (
     <main>
-      <h1>Pagina Home Gerenciador</h1>
+      <SectionHomeManager />
     </main>
   );
 }
