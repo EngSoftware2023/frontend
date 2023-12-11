@@ -32,7 +32,7 @@ export default function FormProduction({ production, producers, products }: IPro
         product: production.product,
         quantity: { value: production.quantity, valid: true, invalid: true },
         date: { value: production.date, valid: true, invalid: true },
-        id:production.id,
+        id: production.id,
 
     });
 
@@ -125,6 +125,7 @@ export default function FormProduction({ production, producers, products }: IPro
                 <Col span={12}>
                     <label htmlFor="producer" style={{ marginTop: `5px` }}>Produtor <span style={{ color: 'red' }}>*</span></label>
                     <Select
+                        disabled
                         style={{ width: `100%`, marginTop: '10px' }}
                         onChange={(e) => {
                             formData.producer = e.toString();
@@ -138,6 +139,7 @@ export default function FormProduction({ production, producers, products }: IPro
                 <Col span={12}>
                     <label htmlFor="product" style={{ marginTop: `5px` }}>Produto <span style={{ color: 'red' }}>*</span></label>
                     <Select
+                    disabled
                         style={{ width: `100%`, marginTop: '10px' }}
                         onChange={(e) => {
                             formData.product = e.toString();
@@ -162,7 +164,7 @@ export default function FormProduction({ production, producers, products }: IPro
                 </Col>
                 <Col span={12}>
                     <label htmlFor="id">Id: </label>
-                    <input style={{marginTop:"25px",padding:'8px'}} type="number" value={production.id} disabled />
+                    <input style={{ marginTop: "25px", padding: '8px' }} type="number" value={production.id} disabled />
                 </Col>
 
                 <Col className={style.containerButtons} span={24}>

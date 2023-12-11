@@ -113,6 +113,13 @@ export default function ElementFormOrder({
         setOrderForm({ ...order });
     };
 
+    function mascaraNumerica(valor: string) {
+        valor = valor.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
+        valor = valor.replace(/(\d{1,3})(\d)/, "$1.$2"); // Adiciona ponto antes dos últimos três dígitos
+        valor = valor.replace(/(\d{1,3})(\d)/, "$1.$2"); // Adiciona ponto antes dos últimos três dígitos (novamente)
+        return parseFloat(valor);
+    }
+
     useEffect(() => {
         const newProducts = orderForm.products.map(({ product_name, ...rest }) => ({
             name: product_name,
@@ -204,22 +211,26 @@ export default function ElementFormOrder({
                                         </Col>
                                         <Col span={8}>
                                             <Form.Item label="Preço" required>
-                                                <input
+                                                <InputNumber
                                                     required
-                                                    type="number"
+                                                    min={1}
+                                                    precision={2}
+                                                    prefix="R$"
                                                     style={{ width: "100%" }}
                                                     onChange={(newValue) => {
-                                                        setOrderForm((prevState) => ({
-                                                            ...prevState,
-                                                            products: prevState.products.map((product, position) =>
-                                                                position === index
-                                                                    ? {
-                                                                        ...product,
-                                                                        price: parseInt(newValue.target.value),
-                                                                    }
-                                                                    : product
-                                                            ),
-                                                        }));
+                                                        if (newValue) {
+                                                            setOrderForm((prevState) => ({
+                                                                ...prevState,
+                                                                products: prevState.products.map((product, position) =>
+                                                                    position === index
+                                                                        ? {
+                                                                            ...product,
+                                                                            price: newValue,
+                                                                        }
+                                                                        : product
+                                                                ),
+                                                            }));
+                                                        }
                                                     }}
                                                     value={order.products[index].price}
                                                 />

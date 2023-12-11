@@ -8,7 +8,6 @@ export default async function PageOrders() {
     Auth.getCokieFromHeaderList("auth_access", headers()) ?? "";
 
   const products = await Api.public.getProducts();
-
   const initialOrder = await Api.private.getOrders({
     access: access_token,
     refresh: "",
@@ -18,6 +17,7 @@ export default async function PageOrders() {
     <main>
       <StructOrder
         products={products.map(({ name }) => name)}
+        productsMatch={products}
         initialOrders={initialOrder}
       />
     </main>

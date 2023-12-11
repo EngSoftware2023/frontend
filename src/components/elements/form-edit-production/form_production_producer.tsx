@@ -125,6 +125,7 @@ export default function FormProductionProducer({ production, producers, products
                 <Col span={12}>
                     <label htmlFor="product" style={{ marginTop: `5px` }}>Produto <span style={{ color: 'red' }}>*</span></label>
                     <Select
+                    disabled
                         style={{ width: `100%`, marginTop: '10px', color: 'black' }}
                         onChange={(e) => {
                             console.log(e)

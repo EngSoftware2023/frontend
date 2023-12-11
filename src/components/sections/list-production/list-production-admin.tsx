@@ -53,7 +53,7 @@ export default function ListProduction({ productions }: MyComponentProps) {
     }
 
     function filterInput(e: string) {
-        setResult(productions.filter((prod) => prod.producer.includes(e) || prod.product.includes(e)))
+        setResult(productions.filter((prod) => prod.producer.toLocaleLowerCase().includes(e.toLocaleLowerCase()) || prod.product.toLocaleLowerCase().includes(e.toLocaleLowerCase())))
     }
 
     return (
@@ -107,10 +107,10 @@ export default function ListProduction({ productions }: MyComponentProps) {
                                                                             <Button>Editar</Button>
                                                                         </Link>
                                                                     </Col>
-                                                                    {/* <Col span={2} className={style.containerButton} onClick={() => { showModal(), setId(id) }}>
+                                                                    <Col span={2} className={style.containerButton} onClick={() => { showModal(), setId(id) }}>
 
                                                                         <Button>Deletar</Button>
-                                                                    </Col> */}
+                                                                    </Col>
                                                                 </Row>
                                                             </div>
                                                         </Col>

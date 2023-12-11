@@ -18,7 +18,7 @@ export default async function Page() {
     }
     return (
         <>
-            <Link href={'/dashboard/gerenciador/listar-producoes'} style={{position:"absolute",right:'40px',top:'20px',color:'red'}}>[X]</Link>
+            <Link href={'/dashboard/produtor/producao'} style={{position:"absolute",right:'40px',top:'20px',color:'red'}}>[X]</Link>
             <FormSectionData producers={producers} products={products} />
         </>
     )

@@ -8,13 +8,16 @@ import { ResponseGetProducts } from "@/service/api/endpoints/products";
 import Api from "@/service/api/api";
 import { useRouter } from "next/navigation";
 import Auth from "@/service/auth/auth";
+import MatchOrder from "./match-order";
+import { IProduct } from "@/types/types";
 
 export type DataListOrder = {
   orders: DataGetOrders;
-  products: string[]
+  products: string[],
+  productsMatch: IProduct[];
 };
 
-export default function SectionListOrder({ orders, products }: DataListOrder) {
+export default function SectionListOrder({ orders, products,productsMatch }: DataListOrder) {
   const [order, setOrder] = useState<TypeOrder>({
     id: 0,
     name: '',
@@ -22,6 +25,7 @@ export default function SectionListOrder({ orders, products }: DataListOrder) {
   });
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openMatch, setMatch] = useState(false);
   const increment = (e: TypeOrder) => {
     router.refresh();
   };
@@ -75,6 +79,8 @@ export default function SectionListOrder({ orders, products }: DataListOrder) {
 
                   <Button style={{ background: '#1677ff', color: 'white' }} onClick={() => { setOrder({ id, name, products }); setOpen(true) }}>Editar</Button>
                   <Button style={{ background: '#fff' }} onClick={() => { setOpenDelete(true), setOrder({ id, name, products }) }}>Apagar</Button>
+                  <Button style={{ background: '#1677ff', color: 'white' }} onClick={() => { setOrder({ id, name, products }); setMatch(true) }}>Verificar estoque</Button>
+
                 </Col>
               </Col>
             </Col>
@@ -105,6 +111,18 @@ export default function SectionListOrder({ orders, products }: DataListOrder) {
         width={'70%'}
       >
         <h2>Tem certeza que deseja deletar?</h2>
+      </Modal>
+      <Modal
+        title="Finalizar pedido"
+        centered
+        open={openMatch}
+        onOk={() => {
+          setMatch(false); 
+        }}
+        onCancel={() => setMatch(false)}
+        width={'70%'}
+      >
+       <MatchOrder orderForm={order} productsMatch={productsMatch}/>
       </Modal>
     </section>
   );
