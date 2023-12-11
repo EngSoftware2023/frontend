@@ -1,4 +1,5 @@
 // UserProfilePage.tsx
+'use client'
 import { useEffect, useState } from "react";
 import Auth, { Payload } from "@/service/auth/auth";
 
